@@ -149,6 +149,7 @@ contract PoolGame {
         address[] memory sheepWinner = sheep;
         uint sheepTotalBalance = sheepPoolBalance;
 
+        // may cause risk
         for (uint256 i = 0; i < sheepWinner.length; i++) {
             reward[sheepWinner[i]] +=
                 (sheepBalance[sheepWinner[i]] / sheepTotalBalance) *
@@ -161,6 +162,7 @@ contract PoolGame {
         address wolfWinner;
         uint winnerBalance;
 
+        // may cause risk
         for (uint256 i = 0; i < wolvesWinner.length; i++) {
             if (wolfBalance[wolvesWinner[i]] > winnerBalance) {
                 wolfWinner = wolvesWinner[i];
