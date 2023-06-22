@@ -3,9 +3,9 @@
     <button v-if="!connected" @click="connect">Connect wallet</button>
 
     <!-- "callContract" event handler is added -->
-    <button v-if="connected" @click="callWinner">Call winner</button>
+    <!-- <button v-if="connected" @click="callWinner">Call winner</button> -->
 
-    <!-- <button v-if="connected" @click="joinSheepPool">Join sheep-pool</button> -->
+    <button v-if="connected" @click="joinSheepPool">Join sheep-pool</button>
     <!-- <button v-if="connected" @click="joinWolfPool">Join WolfPool</button> -->
     <!-- displays the result of the contract -->
     {{ contractResult }}
@@ -33,7 +33,7 @@ export default {
       }
     },
 
-    callWinner() {
+    async joinSheepPool() {
       // method for calling the contract method
       let web3 = new Web3(window.ethereum);
       let contractAddress = "0x10De6eB1e244C5542fa1E14aB02393c3431b77DA";
@@ -339,16 +339,29 @@ export default {
 
       let contract = new web3.eth.Contract(abi, contractAddress);
 
-      contract.methods
-        .owner()
-        .call()
-        .then((result) => (this.contractResult = result));
+      //   contract.methods
+      //     .owner()
+      //     .call()
+      //     .then((result) => (this.contractResult = result));
 
-      // contract.methods.joinSheepPool({
-      //   from: web3.eth.accounts[0],
-      //   gas: 3000000,
-      //   value: 0.005,
-      // });
+      // Set the amount of Ether to send (in wei)
+      let accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      let userAddress = accounts[0];
+      let amountToSend = web3.utils.toWei("0.001", "ether");
+      // Example of calling a contract method that modifies data and sends Ether
+      let txHash = await contract.methods.joinSheepPool().send({
+        from: userAddress,
+        value: amountToSend,
+      });
+
+      console.log(txHash);
+
+      //    wait for the transaction to be mined
+      let result = await web3.eth.getTransactionReceipt(txHash);
+
+      console.log(result);
     },
   },
 };
