@@ -358,7 +358,7 @@ export default {
 
       console.log(txHash);
 
-      //    wait for the transaction to be mined
+      // wait for the transaction to be mined
       let result = await web3.eth.getTransactionReceipt(txHash);
 
       console.log(result);
