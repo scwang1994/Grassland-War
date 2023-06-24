@@ -39,10 +39,7 @@
 </template>
 
 <script>
-import FlipCountdown from "vue2-flip-countdown";
-
 export default {
-  components: { FlipCountdown },
   data() {
     return {
       winner: "SHEEP POOL",

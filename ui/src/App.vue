@@ -1,15 +1,33 @@
 <template>
-  <div>
-    <button v-if="!connected" @click="connect">Connect wallet</button>
+  <v-app>
+    <v-app-bar style="background: black" app :elevation="0">
+      <v-icon color="white" large @click="render('home')"
+        >mdi-home-circle-outline
+      </v-icon>
 
-    <!-- "callContract" event handler is added -->
-    <!-- <button v-if="connected" @click="callWinner">Call winner</button> -->
+      <v-spacer></v-spacer>
+      <a class="mr-5" style="color: white" @click="render('how-to-play')">
+        <!-- href="https://github.com/vuetifyjs/vuetify/releases/latest" -->
+        <span>HOW TO PLAY</span>
+      </a>
+      <v-btn large outlined color="#00896c" dark> Connect wallet </v-btn>
+    </v-app-bar>
 
-    <button v-if="connected" @click="joinSheepPool">Join sheep-pool</button>
-    <!-- <button v-if="connected" @click="joinWolfPool">Join WolfPool</button> -->
-    <!-- displays the result of the contract -->
-    {{ contractResult }}
-  </div>
+    <v-container class="setting" fill-height fluid>
+      <v-main>
+        <router-view />
+      </v-main>
+      <!-- <button v-if="!connected" @click="connect">Connect wallet</button> -->
+
+      <!-- "callContract" event handler is added -->
+      <!-- <button v-if="connected" @click="callWinner">Call winner</button> -->
+
+      <!-- <button v-if="connected" @click="joinSheepPool">Join sheep-pool</button> -->
+      <!-- <button v-if="connected" @click="joinWolfPool">Join WolfPool</button> -->
+      <!-- displays the result of the contract -->
+      <!-- {{ contractResult }} -->
+    </v-container>
+  </v-app>
 </template>
 
 <script>
@@ -24,6 +42,10 @@ export default {
     };
   },
   methods: {
+    render(_pathUrl) {
+      this.$router.push({ name: _pathUrl });
+    },
+
     connect() {
       let ethereum = window.ethereum;
       if (ethereum) {
@@ -366,3 +388,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.setting {
+  font-family: monospace, sans-serif;
+  background: black;
+}
+</style>
