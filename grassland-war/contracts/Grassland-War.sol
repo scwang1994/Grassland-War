@@ -6,6 +6,7 @@ import "compound-protocol/contracts/CErc20.sol";
 import "compound-protocol/contracts/Comptroller.sol";
 
 // sheep, wolves 會越來越肥
+// if game not ended and player withdraw, they could get the interest in compound
 
 contract PoolGame {
     address public owner;
@@ -25,6 +26,7 @@ contract PoolGame {
     event Withdrawal(address indexed recipient, uint256 amount);
     event Deposit(address indexed depositor, uint8 group, uint256 amount);
     event WithdrawalReward(address indexed recipient, uint256 amount);
+    event InterestEarned(address account, uint256 amount);
 
     Comptroller public comptroller;
     CEther public cEther;
@@ -87,7 +89,7 @@ contract PoolGame {
         require(_amount > 0, "Invalid amount");
 
         bool initEnter = false;
-        if (getcTokenBalance() == 0) {
+        if (getCTokenBalance() == 0) {
             initEnter = true;
         }
         // Mint cEther by supplying Ether to Compound
@@ -108,6 +110,9 @@ contract PoolGame {
         require(_amount > 0, "Amount must be greater than 0");
         require(_amount <= sheepBalance[msg.sender], "Insufficient balance");
 
+        uint _cTokenAmount = (getCTokenBalance() * _amount) /
+            sheepBalance[msg.sender];
+
         sheepBalance[msg.sender] -= _amount;
         uint sheepPoolBalanceBefore = sheepPoolBalance;
         sheepPoolBalance -= _amount;
@@ -121,12 +126,17 @@ contract PoolGame {
         }
 
         // Transfer the amount to the recipient"s address
-        _redeemFromCompound(_amount);
+        uint redeemedAmount = _redeemFromCompound(_cTokenAmount);
+        payable(msg.sender).transfer(redeemedAmount);
+        emit Withdrawal(msg.sender, redeemedAmount);
     }
 
     function leaveWolfPool(uint _amount) external {
         require(_amount > 0, "Amount must be greater than 0");
         require(_amount <= wolfBalance[msg.sender], "Insufficient balance");
+
+        uint _cTokenAmount = (getCTokenBalance() * _amount * 3) /
+            wolfBalance[msg.sender];
 
         wolfBalance[msg.sender] -= _amount * 3;
         uint wolfPoolBalanceBefore = wolfPoolBalance;
@@ -141,10 +151,12 @@ contract PoolGame {
         }
 
         // Transfer the amount to the recipient"s address
-        _redeemFromCompound(_amount);
+        uint redeemedAmount = _redeemFromCompound(_cTokenAmount);
+        payable(msg.sender).transfer(redeemedAmount);
+        emit Withdrawal(msg.sender, redeemedAmount);
     }
 
-    function _redeemFromCompound(uint _cTokenAmount) internal payable {
+    function _redeemFromCompound(uint _cTokenAmount) internal returns (uint) {
         require(_cTokenAmount > 0, "Invalid amount");
 
         // beforeRedeem
@@ -155,16 +167,16 @@ contract PoolGame {
 
         // Transfer redeemed Ether to the caller
         uint redeemedAmount = address(this).balance - beforeRedeem;
-        payable(msg.sender).transfer(redeemedAmount);
-        emit Withdrawal(msg.sender, _amount);
+
+        return redeemedAmount;
     }
 
-    function getPrize() public returns (uint) {
+    function getPrize() external payable returns (uint) {
         require(block.timestamp >= endTime, "Game is still in progress.");
         require(winner != 0, "There is no winner yet.");
 
-        // farmingReward
-        uint farmingReward;
+        uint interestEarned = _claimInterest();
+        payable(owner).transfer((interestEarned * 2) / 100);
 
         // check status
         if (wolves.length == 0) {
@@ -175,16 +187,29 @@ contract PoolGame {
 
         if (winner == 1) {
             // call sheep win prize
-            _updateSheepReward(farmingReward);
+            _updateSheepReward((interestEarned * 98) / 100);
         } else if (winner == 2) {
             // call wolf win prize
-            _updateWolfReward(farmingReward);
+            _updateWolfReward((interestEarned * 98) / 100);
+        } else {
+            payable(owner).transfer((interestEarned * 98) / 100);
         }
 
         // transfer prize
         _updateEndTime(); // update to new game
 
         return winner;
+    }
+
+    function _claimInterest() internal returns (uint) {
+        uint balanceBefore = getCTokenBalance();
+        require(balanceBefore > 0, "No interest available");
+
+        uint allETH = cEther.redeem(balanceBefore);
+        uint interestEarned = allETH - (sheepPoolBalance + wolfPoolBalance / 3);
+
+        emit InterestEarned(address(this), interestEarned);
+        return interestEarned;
     }
 
     function _updateSheepReward(uint _farmingReward) internal {
@@ -229,7 +254,7 @@ contract PoolGame {
         emit WithdrawalReward(msg.sender, _amount);
     }
 
-    function getcTokenBalance() public view returns (uint) {
+    function getCTokenBalance() public view returns (uint) {
         return cEther.balanceOf(address(this));
     }
 }
