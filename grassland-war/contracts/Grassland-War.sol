@@ -57,7 +57,6 @@ contract PoolGame {
         }
 
         _supplyToCompound(msg.value);
-        emit Deposit(msg.sender, 1, msg.value);
     }
 
     function joinWolfPool() external payable {
@@ -82,10 +81,9 @@ contract PoolGame {
         }
 
         _supplyToCompound(msg.value);
-        emit Deposit(msg.sender, 2, msg.value);
     }
 
-    function _supplyToCompound(uint _amount) public payable {
+    function _supplyToCompound(uint _amount) internal {
         require(_amount > 0, "Invalid amount");
 
         bool initEnter = false;
@@ -102,6 +100,8 @@ contract PoolGame {
             uint[] memory errors = comptroller.enterMarkets(cTokens);
             require(errors[0] == 0, "Failed to enter market");
         }
+
+        emit Deposit(msg.sender, 1, msg.value);
     }
 
     function leaveSheepPool(uint _amount) external {
@@ -121,9 +121,7 @@ contract PoolGame {
         }
 
         // Transfer the amount to the recipient"s address
-        payable(msg.sender).transfer(_amount);
-
-        emit Withdrawal(msg.sender, _amount);
+        _redeemFromCompound(_amount);
     }
 
     function leaveWolfPool(uint _amount) external {
@@ -143,7 +141,21 @@ contract PoolGame {
         }
 
         // Transfer the amount to the recipient"s address
-        payable(msg.sender).transfer(_amount);
+        _redeemFromCompound(_amount);
+    }
+
+    function _redeemFromCompound(uint _cTokenAmount) internal payable {
+        require(_cTokenAmount > 0, "Invalid amount");
+
+        // beforeRedeem
+        uint beforeRedeem = address(this).balance;
+        // Redeem cEther from Compound
+        uint errorLog = cEther.redeem(_cTokenAmount);
+        require(errorLog == 0, "Failed to redeem cEther");
+
+        // Transfer redeemed Ether to the caller
+        uint redeemedAmount = address(this).balance - beforeRedeem;
+        payable(msg.sender).transfer(redeemedAmount);
         emit Withdrawal(msg.sender, _amount);
     }
 
