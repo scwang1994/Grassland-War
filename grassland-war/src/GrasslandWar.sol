@@ -8,7 +8,7 @@ import "compound-protocol/contracts/Comptroller.sol";
 // sheep, wolves 會越來越肥
 // if game not ended and player withdraw, they could get the interest in compound
 
-contract PoolGame {
+contract GrassLandWar {
     address public owner;
 
     uint8 public winner;
@@ -31,7 +31,7 @@ contract PoolGame {
     Comptroller public comptroller;
     CEther public cEther;
 
-    constructor(address _comptroller, address _cEther) {
+    constructor(address _comptroller, address _cEther) payable {
         comptroller = Comptroller(_comptroller);
         cEther = CEther(payable(_cEther));
         owner = msg.sender;
@@ -208,6 +208,9 @@ contract PoolGame {
         uint allETH = cEther.redeem(balanceBefore);
         uint interestEarned = allETH - (sheepPoolBalance + wolfPoolBalance / 3);
 
+        // mint it back
+        _supplyToCompound(allETH - interestEarned);
+
         emit InterestEarned(address(this), interestEarned);
         return interestEarned;
     }
@@ -254,7 +257,13 @@ contract PoolGame {
         emit WithdrawalReward(msg.sender, _amount);
     }
 
+    function getReward() public view returns (uint) {
+        return reward[msg.sender];
+    }
+
     function getCTokenBalance() public view returns (uint) {
         return cEther.balanceOf(address(this));
     }
+
+    receive() external payable {}
 }
