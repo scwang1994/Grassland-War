@@ -2,7 +2,7 @@ pragma solidity ^0.8.17;
 
 import "openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
 import "openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol";
-import "compound-protocol/contracts/CErc20.sol";
+import "compound-protocol/contracts/CEther.sol";
 import "compound-protocol/contracts/Comptroller.sol";
 
 // sheep, wolves 會越來越肥
@@ -31,9 +31,9 @@ contract GrassLandWar {
     Comptroller public comptroller;
     CEther public cEther;
 
-    constructor(address _comptroller, address _cEther) payable {
-        comptroller = Comptroller(_comptroller);
-        cEther = CEther(payable(_cEther));
+    constructor() payable {
+        comptroller = Comptroller(0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B);
+        cEther = CEther(payable(0x4Ddc2D193948926D02f9B1fE9e1daa0718270ED5));
         owner = msg.sender;
     }
 
@@ -135,12 +135,12 @@ contract GrassLandWar {
         require(_amount > 0, "Amount must be greater than 0");
         require(_amount <= wolfBalance[msg.sender], "Insufficient balance");
 
-        uint _cTokenAmount = (getCTokenBalance() * _amount * 3) /
+        uint _cTokenAmount = (getCTokenBalance() * _amount) /
             wolfBalance[msg.sender];
 
-        wolfBalance[msg.sender] -= _amount * 3;
+        wolfBalance[msg.sender] -= _amount;
         uint wolfPoolBalanceBefore = wolfPoolBalance;
-        sheepPoolBalance -= _amount * 3;
+        wolfPoolBalance -= _amount;
 
         if (
             wolfPoolBalanceBefore >= sheepPoolBalance &&
@@ -171,7 +171,7 @@ contract GrassLandWar {
         return redeemedAmount;
     }
 
-    function getPrize() external payable returns (uint) {
+    function pickWinner() external payable returns (uint) {
         require(block.timestamp >= endTime, "Game is still in progress.");
         require(winner != 0, "There is no winner yet.");
 
@@ -255,6 +255,34 @@ contract GrassLandWar {
         // Transfer the amount to the recipient"s address
         payable(msg.sender).transfer(_amount);
         emit WithdrawalReward(msg.sender, _amount);
+    }
+
+    function getWinner() public view returns (uint) {
+        return winner;
+    }
+
+    function getSheep() public view returns (uint) {
+        return sheep.length;
+    }
+
+    function getWolves() public view returns (uint) {
+        return wolves.length;
+    }
+
+    function getSheepPoolBalance() public view returns (uint) {
+        return sheepPoolBalance;
+    }
+
+    function getWolfPoolBalance() public view returns (uint) {
+        return wolfPoolBalance;
+    }
+
+    function getSheepBalance() public view returns (uint) {
+        return sheepBalance[msg.sender];
+    }
+
+    function getWolfBalance() public view returns (uint) {
+        return wolfBalance[msg.sender];
     }
 
     function getReward() public view returns (uint) {
