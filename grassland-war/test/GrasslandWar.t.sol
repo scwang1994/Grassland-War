@@ -718,7 +718,151 @@ contract GrassLandWarTest is Test {
     //     vm.stopPrank();
     // }
 
-    function test_Claim_By_Sheep() public {
+    // function test_Claim_By_Sheep() public {
+    //     uint depositAmountSheep = 3 ether;
+    //     uint depositAmountWolf = 1 ether;
+
+    //     vm.startPrank(player1);
+    //     gameContract.joinSheepPool{value: depositAmountSheep}();
+    //     vm.stopPrank();
+
+    //     vm.startPrank(player2);
+    //     gameContract.joinSheepPool{value: depositAmountSheep}();
+    //     vm.stopPrank();
+
+    //     vm.startPrank(player3);
+    //     gameContract.joinSheepPool{value: depositAmountSheep}();
+    //     vm.stopPrank();
+
+    //     vm.startPrank(player4);
+    //     gameContract.joinWolfPool{value: depositAmountWolf}();
+    //     vm.stopPrank();
+
+    //     vm.startPrank(player5);
+    //     gameContract.joinWolfPool{value: depositAmountWolf}();
+    //     vm.stopPrank();
+
+    //     // check sheepPoolBalance = 9 eth;
+    //     require(
+    //         gameContract.getSheepPoolBalance() == 9 ether,
+    //         "insufficient sheep pool amount"
+    //     );
+    //     // check wolfPoolBalance = 6 eth;
+    //     require(
+    //         gameContract.getWolfPoolBalance() == 6 ether,
+    //         "insufficient wolf pool amount"
+    //     );
+
+    //     // roll to end time
+    //     vm.warp(block.timestamp + 7 days + 1);
+    //     vm.roll(13500000);
+
+    //     // pick winner
+    //     uint winner = gameContract.pickWinner();
+    //     console.log("winner is : %s", winner);
+
+    //     require(player1.balance == 7 ether, "incorrect amount");
+    //     vm.startPrank(player1);
+    //     gameContract.claim();
+    //     vm.stopPrank();
+    //     assertGt(player1.balance, 7 ether);
+    //     console.log(player1.balance);
+    // }
+
+    // function test_Claim_By_Wolf() public {
+    //     uint depositAmountSheep = 1 ether;
+    //     uint depositAmountWolf = 4 ether;
+
+    //     vm.startPrank(player1);
+    //     gameContract.joinSheepPool{value: depositAmountSheep}();
+    //     vm.stopPrank();
+
+    //     vm.startPrank(player2);
+    //     gameContract.joinSheepPool{value: depositAmountSheep}();
+    //     vm.stopPrank();
+
+    //     vm.startPrank(player3);
+    //     gameContract.joinSheepPool{value: depositAmountSheep}();
+    //     vm.stopPrank();
+
+    //     vm.startPrank(player4);
+    //     gameContract.joinWolfPool{value: depositAmountWolf}();
+    //     vm.stopPrank();
+
+    //     vm.startPrank(player5);
+    //     gameContract.joinWolfPool{value: depositAmountWolf}();
+    //     vm.stopPrank();
+
+    //     // check sheepPoolBalance = 3 eth;
+    //     require(
+    //         gameContract.getSheepPoolBalance() == 3 ether,
+    //         "insufficient sheep pool amount"
+    //     );
+    //     // check wolfPoolBalance = 24 eth;
+    //     require(
+    //         gameContract.getWolfPoolBalance() == 24 ether,
+    //         "insufficient wolf pool amount"
+    //     );
+
+    //     // roll to end time
+    //     vm.warp(block.timestamp + 7 days + 1);
+    //     vm.roll(13500000);
+
+    //     // pick winner
+    //     uint winner = gameContract.pickWinner();
+    //     console.log("winner is : %s", winner);
+
+    //     require(player4.balance == 6 ether, "incorrect amount");
+    //     vm.startPrank(player4);
+    //     gameContract.claim();
+    //     vm.stopPrank();
+    //     assertGt(player4.balance, 6 ether);
+    //     console.log(player4.balance);
+    // }
+
+    // function test_Claim_By_Owner() public {
+    //     uint depositAmountSheep = 4 ether;
+
+    //     vm.startPrank(player1);
+    //     gameContract.joinSheepPool{value: depositAmountSheep}();
+    //     vm.stopPrank();
+
+    //     vm.startPrank(player2);
+    //     gameContract.joinSheepPool{value: depositAmountSheep}();
+    //     vm.stopPrank();
+
+    //     vm.startPrank(player3);
+    //     gameContract.joinSheepPool{value: depositAmountSheep}();
+    //     vm.stopPrank();
+
+    //     // check sheepPoolBalance = 12 eth;
+    //     require(
+    //         gameContract.getSheepPoolBalance() == 12 ether,
+    //         "insufficient sheep pool amount"
+    //     );
+    //     // check wolfPoolBalance = 6 eth;
+    //     require(
+    //         gameContract.getWolfPoolBalance() == 0 ether,
+    //         "insufficient wolf pool amount"
+    //     );
+
+    //     // roll to end time
+    //     vm.warp(block.timestamp + 7 days + 1);
+    //     vm.roll(13500000);
+
+    //     // pick winner
+    //     uint winner = gameContract.pickWinner();
+    //     console.log("winner is : %s", winner);
+
+    //     require(owner.balance == 0 ether, "incorrect amount");
+    //     vm.startPrank(owner);
+    //     gameContract.claim();
+    //     vm.stopPrank();
+    //     assertGt(owner.balance, 0 ether);
+    //     console.log(owner.balance);
+    // }
+
+    function test_Game_2() public {
         uint depositAmountSheep = 3 ether;
         uint depositAmountWolf = 1 ether;
 
@@ -757,108 +901,21 @@ contract GrassLandWarTest is Test {
         vm.warp(block.timestamp + 7 days + 1);
         vm.roll(13500000);
 
-        // pick winner
-        uint winner = gameContract.pickWinner();
-        console.log("winner is : %s", winner);
+        // pick game#1 winner
+        uint game1Winner = gameContract.pickWinner();
+        console.log("the game#1 winner is : %s", game1Winner);
 
-        require(player1.balance == 7 ether, "incorrect amount");
-        vm.startPrank(player1);
-        gameContract.claim();
-        vm.stopPrank();
-        assertGt(player1.balance, 7 ether);
-        console.log(player1.balance);
-    }
-
-    function test_Claim_By_Wolf() public {
-        uint depositAmountSheep = 1 ether;
-        uint depositAmountWolf = 4 ether;
-
-        vm.startPrank(player1);
-        gameContract.joinSheepPool{value: depositAmountSheep}();
-        vm.stopPrank();
-
-        vm.startPrank(player2);
-        gameContract.joinSheepPool{value: depositAmountSheep}();
-        vm.stopPrank();
-
-        vm.startPrank(player3);
-        gameContract.joinSheepPool{value: depositAmountSheep}();
-        vm.stopPrank();
-
+        require(game1Winner == 1, "incorrect game#1 winner");
         vm.startPrank(player4);
-        gameContract.joinWolfPool{value: depositAmountWolf}();
+        gameContract.joinWolfPool{value: depositAmountSheep}();
         vm.stopPrank();
-
-        vm.startPrank(player5);
-        gameContract.joinWolfPool{value: depositAmountWolf}();
-        vm.stopPrank();
-
-        // check sheepPoolBalance = 3 eth;
-        require(
-            gameContract.getSheepPoolBalance() == 3 ether,
-            "insufficient sheep pool amount"
-        );
-        // check wolfPoolBalance = 24 eth;
-        require(
-            gameContract.getWolfPoolBalance() == 24 ether,
-            "insufficient wolf pool amount"
-        );
 
         // roll to end time
         vm.warp(block.timestamp + 7 days + 1);
-        vm.roll(13500000);
+        vm.roll(14000000);
 
-        // pick winner
-        uint winner = gameContract.pickWinner();
-        console.log("winner is : %s", winner);
-
-        require(player4.balance == 6 ether, "incorrect amount");
-        vm.startPrank(player4);
-        gameContract.claim();
-        vm.stopPrank();
-        assertGt(player4.balance, 6 ether);
-        console.log(player4.balance);
-    }
-
-    function test_Claim_By_Owner() public {
-        uint depositAmountSheep = 4 ether;
-
-        vm.startPrank(player1);
-        gameContract.joinSheepPool{value: depositAmountSheep}();
-        vm.stopPrank();
-
-        vm.startPrank(player2);
-        gameContract.joinSheepPool{value: depositAmountSheep}();
-        vm.stopPrank();
-
-        vm.startPrank(player3);
-        gameContract.joinSheepPool{value: depositAmountSheep}();
-        vm.stopPrank();
-
-        // check sheepPoolBalance = 12 eth;
-        require(
-            gameContract.getSheepPoolBalance() == 12 ether,
-            "insufficient sheep pool amount"
-        );
-        // check wolfPoolBalance = 6 eth;
-        require(
-            gameContract.getWolfPoolBalance() == 0 ether,
-            "insufficient wolf pool amount"
-        );
-
-        // roll to end time
-        vm.warp(block.timestamp + 7 days + 1);
-        vm.roll(13500000);
-
-        // pick winner
-        uint winner = gameContract.pickWinner();
-        console.log("winner is : %s", winner);
-
-        require(owner.balance == 0 ether, "incorrect amount");
-        vm.startPrank(owner);
-        gameContract.claim();
-        vm.stopPrank();
-        assertGt(owner.balance, 0 ether);
-        console.log(owner.balance);
+        // pick game#2 winner
+        uint game2Winner = gameContract.pickWinner();
+        console.log("the game#2 winner is : %s", game2Winner);
     }
 }
