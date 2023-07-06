@@ -114,7 +114,7 @@ contract GrassLandWar {
 
         uint sheepPoolBalanceBefore = sheepPoolBalance;
         uint _cTokenAmount = (getCTokenBalance() * _amount) /
-            sheepPoolBalanceBefore;
+            (sheepPoolBalanceBefore + wolfPoolBalance / 3);
 
         sheepBalance[msg.sender] -= _amount;
         sheepPoolBalance -= _amount;
@@ -138,8 +138,8 @@ contract GrassLandWar {
         require(_amount <= wolfBalance[msg.sender], "Insufficient balance");
 
         uint wolfPoolBalanceBefore = wolfPoolBalance;
-        uint _cTokenAmount = (getCTokenBalance() * _amount) /
-            wolfPoolBalanceBefore;
+        uint _cTokenAmount = ((getCTokenBalance() * _amount) / 3) /
+            ((wolfPoolBalanceBefore / 3) + sheepPoolBalance);
 
         wolfBalance[msg.sender] -= _amount;
         wolfPoolBalance -= _amount;
@@ -161,8 +161,8 @@ contract GrassLandWar {
     function _redeemFromCompound(uint _cTokenAmount) internal returns (uint) {
         require(_cTokenAmount > 0, "Invalid amount");
 
-        // 懲罰性扣除20%資金
-        uint newAmount = (_cTokenAmount * 80) / 100;
+        // 懲罰性扣除1%資金
+        uint newAmount = (_cTokenAmount * 99) / 100;
 
         // beforeRedeem
         uint beforeRedeem = address(this).balance;
@@ -181,8 +181,7 @@ contract GrassLandWar {
         require(winner != 0, "There is no winner yet.");
 
         uint interestEarned = _claimInterest();
-
-        // payable(owner).transfer((interestEarned * 2) / 100);
+        // console.log("interestEarned is %s", interestEarned);
 
         // check status
         if (wolves.length == 0) {
@@ -194,11 +193,13 @@ contract GrassLandWar {
         if (winner == 1) {
             // call sheep win prize
             _updateSheepReward((interestEarned * 98) / 100);
+            reward[owner] += ((interestEarned * 2) / 100);
         } else if (winner == 2) {
             // call wolf win prize
             _updateWolfReward((interestEarned * 98) / 100);
+            reward[owner] += ((interestEarned * 2) / 100);
         } else {
-            // payable(owner).transfer((interestEarned * 98) / 100);
+            reward[owner] += interestEarned;
         }
 
         // transfer prize
@@ -256,23 +257,23 @@ contract GrassLandWar {
                 wolfWinner = wolvesWinner[i];
                 winnerBalance = wolfBalance[wolvesWinner[i]];
             }
-            reward[wolfWinner] += _farmingReward;
         }
+        reward[wolfWinner] += _farmingReward;
     }
 
     function _updateEndTime() internal {
         endTime = block.timestamp + 7 days;
     }
 
-    function claim(uint _amount) external {
-        require(_amount > 0, "Amount must be greater than 0");
-        require(_amount <= reward[msg.sender], "Insufficient reward balance");
+    function claim() external {
+        uint amount = reward[msg.sender];
 
-        reward[msg.sender] -= _amount;
+        require(amount > 0, "Amount must be greater than 0");
+        reward[msg.sender] = 0;
 
         // Transfer the amount to the recipient"s address
-        payable(msg.sender).transfer(_amount);
-        emit WithdrawalReward(msg.sender, _amount);
+        payable(msg.sender).transfer(amount);
+        emit WithdrawalReward(msg.sender, amount);
     }
 
     function getEndTime() public view returns (uint) {
