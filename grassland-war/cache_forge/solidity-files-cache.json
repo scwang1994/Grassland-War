@@ -13,7 +13,7 @@
   },
   "files": {
     "lib/compound-protocol/contracts/CEther.sol": {
-      "lastModificationDate": 1687525321086,
+      "lastModificationDate": 1688569156527,
       "contentHash": "cff352f51fcbcaff6d5ae6d2ed80d3fd",
       "sourceName": "lib/compound-protocol/contracts/CEther.sol",
       "solcConfig": {
@@ -62,7 +62,7 @@
       }
     },
     "lib/compound-protocol/contracts/CToken.sol": {
-      "lastModificationDate": 1687525321087,
+      "lastModificationDate": 1688569156527,
       "contentHash": "8d52e170e0249c219114fc15118e4dce",
       "sourceName": "lib/compound-protocol/contracts/CToken.sol",
       "solcConfig": {
@@ -110,7 +110,7 @@
       }
     },
     "lib/compound-protocol/contracts/CTokenInterfaces.sol": {
-      "lastModificationDate": 1687525321087,
+      "lastModificationDate": 1688569156527,
       "contentHash": "86fd78e40fe042485eb05b294aa6d6b2",
       "sourceName": "lib/compound-protocol/contracts/CTokenInterfaces.sol",
       "solcConfig": {
@@ -173,7 +173,7 @@
       }
     },
     "lib/compound-protocol/contracts/Comptroller.sol": {
-      "lastModificationDate": 1687525321087,
+      "lastModificationDate": 1688569156528,
       "contentHash": "f5e71cf86920aaaae6e1002c90998faf",
       "sourceName": "lib/compound-protocol/contracts/Comptroller.sol",
       "solcConfig": {
@@ -226,7 +226,7 @@
       }
     },
     "lib/compound-protocol/contracts/ComptrollerInterface.sol": {
-      "lastModificationDate": 1687525321087,
+      "lastModificationDate": 1688569156528,
       "contentHash": "b6cc72b3c50ad69e163ca9e81f7286d3",
       "sourceName": "lib/compound-protocol/contracts/ComptrollerInterface.sol",
       "solcConfig": {
@@ -266,7 +266,7 @@
       }
     },
     "lib/compound-protocol/contracts/ComptrollerStorage.sol": {
-      "lastModificationDate": 1687525321087,
+      "lastModificationDate": 1688569156528,
       "contentHash": "979f74c1b63efa85f94a84f9f960cedc",
       "sourceName": "lib/compound-protocol/contracts/ComptrollerStorage.sol",
       "solcConfig": {
@@ -337,7 +337,7 @@
       }
     },
     "lib/compound-protocol/contracts/EIP20Interface.sol": {
-      "lastModificationDate": 1687525321088,
+      "lastModificationDate": 1688569156529,
       "contentHash": "c00d6a06d24b7bbaee081458554a68ac",
       "sourceName": "lib/compound-protocol/contracts/EIP20Interface.sol",
       "solcConfig": {
@@ -377,7 +377,7 @@
       }
     },
     "lib/compound-protocol/contracts/EIP20NonStandardInterface.sol": {
-      "lastModificationDate": 1687525321088,
+      "lastModificationDate": 1688569156529,
       "contentHash": "e27a903d064172c95703d59e56bef727",
       "sourceName": "lib/compound-protocol/contracts/EIP20NonStandardInterface.sol",
       "solcConfig": {
@@ -417,7 +417,7 @@
       }
     },
     "lib/compound-protocol/contracts/ErrorReporter.sol": {
-      "lastModificationDate": 1687525321088,
+      "lastModificationDate": 1688569156529,
       "contentHash": "a0fcea307efa9b7244be27d0f457d5da",
       "sourceName": "lib/compound-protocol/contracts/ErrorReporter.sol",
       "solcConfig": {
@@ -460,7 +460,7 @@
       }
     },
     "lib/compound-protocol/contracts/ExponentialNoError.sol": {
-      "lastModificationDate": 1687525321088,
+      "lastModificationDate": 1688569156529,
       "contentHash": "ce0f7a2fe63f8f029cf97ecff2e48376",
       "sourceName": "lib/compound-protocol/contracts/ExponentialNoError.sol",
       "solcConfig": {
@@ -500,7 +500,7 @@
       }
     },
     "lib/compound-protocol/contracts/Governance/Comp.sol": {
-      "lastModificationDate": 1687525321088,
+      "lastModificationDate": 1688569156529,
       "contentHash": "40d4f4a6c12f4b82e4ac71c89968cc89",
       "sourceName": "lib/compound-protocol/contracts/Governance/Comp.sol",
       "solcConfig": {
@@ -540,7 +540,7 @@
       }
     },
     "lib/compound-protocol/contracts/InterestRateModel.sol": {
-      "lastModificationDate": 1687525321089,
+      "lastModificationDate": 1688569156531,
       "contentHash": "7a4e1aca0dcc298faae9884dde2b6d19",
       "sourceName": "lib/compound-protocol/contracts/InterestRateModel.sol",
       "solcConfig": {
@@ -580,7 +580,7 @@
       }
     },
     "lib/compound-protocol/contracts/PriceOracle.sol": {
-      "lastModificationDate": 1687525321089,
+      "lastModificationDate": 1688569156531,
       "contentHash": "8eb87ff5da7403c82dc2feae4731be58",
       "sourceName": "lib/compound-protocol/contracts/PriceOracle.sol",
       "solcConfig": {
@@ -629,7 +629,7 @@
       }
     },
     "lib/compound-protocol/contracts/Unitroller.sol": {
-      "lastModificationDate": 1687525321090,
+      "lastModificationDate": 1688569156532,
       "contentHash": "ed53a0e06478bb07b66b055195b7a52d",
       "sourceName": "lib/compound-protocol/contracts/Unitroller.sol",
       "solcConfig": {
@@ -680,7 +680,7 @@
       }
     },
     "lib/forge-std/lib/ds-test/src/test.sol": {
-      "lastModificationDate": 1687525073687,
+      "lastModificationDate": 1688569156613,
       "contentHash": "abdafe4b187f548ef0145173f5b93247",
       "sourceName": "lib/forge-std/lib/ds-test/src/test.sol",
       "solcConfig": {
@@ -720,7 +720,7 @@
       }
     },
     "lib/forge-std/src/Base.sol": {
-      "lastModificationDate": 1687525072295,
+      "lastModificationDate": 1688569156614,
       "contentHash": "8f04bbbb2c16f79e14fdc321695a8ec2",
       "sourceName": "lib/forge-std/src/Base.sol",
       "solcConfig": {
@@ -769,7 +769,7 @@
       }
     },
     "lib/forge-std/src/StdAssertions.sol": {
-      "lastModificationDate": 1687525072296,
+      "lastModificationDate": 1688569156614,
       "contentHash": "9de0f799a1b1664749ddd6ce6492eae1",
       "sourceName": "lib/forge-std/src/StdAssertions.sol",
       "solcConfig": {
@@ -812,7 +812,7 @@
       }
     },
     "lib/forge-std/src/StdChains.sol": {
-      "lastModificationDate": 1687525072296,
+      "lastModificationDate": 1688569156614,
       "contentHash": "f73fef006f384b898c755b0e404b84a2",
       "sourceName": "lib/forge-std/src/StdChains.sol",
       "solcConfig": {
@@ -854,7 +854,7 @@
       }
     },
     "lib/forge-std/src/StdCheats.sol": {
-      "lastModificationDate": 1687525072296,
+      "lastModificationDate": 1688569156614,
       "contentHash": "bc3e9c79e8a604fa6204de0168fe275d",
       "sourceName": "lib/forge-std/src/StdCheats.sol",
       "solcConfig": {
@@ -900,7 +900,7 @@
       }
     },
     "lib/forge-std/src/StdError.sol": {
-      "lastModificationDate": 1687525072297,
+      "lastModificationDate": 1688569156614,
       "contentHash": "64c896e1276a291776e5ea5aecb3870a",
       "sourceName": "lib/forge-std/src/StdError.sol",
       "solcConfig": {
@@ -940,7 +940,7 @@
       }
     },
     "lib/forge-std/src/StdInvariant.sol": {
-      "lastModificationDate": 1687525072297,
+      "lastModificationDate": 1688569156614,
       "contentHash": "12c06010ec43ce935ed209d5aca30828",
       "sourceName": "lib/forge-std/src/StdInvariant.sol",
       "solcConfig": {
@@ -980,7 +980,7 @@
       }
     },
     "lib/forge-std/src/StdJson.sol": {
-      "lastModificationDate": 1687525072297,
+      "lastModificationDate": 1688569156614,
       "contentHash": "2e1d13674e152408867795362d833c24",
       "sourceName": "lib/forge-std/src/StdJson.sol",
       "solcConfig": {
@@ -1022,7 +1022,7 @@
       }
     },
     "lib/forge-std/src/StdMath.sol": {
-      "lastModificationDate": 1687525072297,
+      "lastModificationDate": 1688569156615,
       "contentHash": "9da8f453eba6bb98f3d75bc6822bfb29",
       "sourceName": "lib/forge-std/src/StdMath.sol",
       "solcConfig": {
@@ -1062,7 +1062,7 @@
       }
     },
     "lib/forge-std/src/StdStorage.sol": {
-      "lastModificationDate": 1687525072297,
+      "lastModificationDate": 1688569156615,
       "contentHash": "3cb9868082df39a53927db09dbc21f23",
       "sourceName": "lib/forge-std/src/StdStorage.sol",
       "solcConfig": {
@@ -1107,7 +1107,7 @@
       }
     },
     "lib/forge-std/src/StdStyle.sol": {
-      "lastModificationDate": 1687525072297,
+      "lastModificationDate": 1688569156615,
       "contentHash": "820e6f6b7704f0c980fae604b1e34b18",
       "sourceName": "lib/forge-std/src/StdStyle.sol",
       "solcConfig": {
@@ -1149,7 +1149,7 @@
       }
     },
     "lib/forge-std/src/StdUtils.sol": {
-      "lastModificationDate": 1687525072297,
+      "lastModificationDate": 1688569156615,
       "contentHash": "45fc08daaa17b7908fa5de7d758d8c86",
       "sourceName": "lib/forge-std/src/StdUtils.sol",
       "solcConfig": {
@@ -1192,7 +1192,7 @@
       }
     },
     "lib/forge-std/src/Test.sol": {
-      "lastModificationDate": 1687525072298,
+      "lastModificationDate": 1688569156615,
       "contentHash": "bc9d74a0c612e1c2b66cca2973bcc803",
       "sourceName": "lib/forge-std/src/Test.sol",
       "solcConfig": {
@@ -1249,7 +1249,7 @@
       }
     },
     "lib/forge-std/src/Vm.sol": {
-      "lastModificationDate": 1687525072298,
+      "lastModificationDate": 1688569156615,
       "contentHash": "7ca2e92dbe1abdc52e68bfd58bca1cc1",
       "sourceName": "lib/forge-std/src/Vm.sol",
       "solcConfig": {
@@ -1292,7 +1292,7 @@
       }
     },
     "lib/forge-std/src/console.sol": {
-      "lastModificationDate": 1687525072298,
+      "lastModificationDate": 1688569156616,
       "contentHash": "100b8a33b917da1147740d7ab8b0ded3",
       "sourceName": "lib/forge-std/src/console.sol",
       "solcConfig": {
@@ -1332,7 +1332,7 @@
       }
     },
     "lib/forge-std/src/console2.sol": {
-      "lastModificationDate": 1687525072298,
+      "lastModificationDate": 1688569156616,
       "contentHash": "2096b4e5f252c5df9909cccbe3d2da2e",
       "sourceName": "lib/forge-std/src/console2.sol",
       "solcConfig": {
@@ -1372,7 +1372,7 @@
       }
     },
     "lib/forge-std/src/interfaces/IMulticall3.sol": {
-      "lastModificationDate": 1687525072299,
+      "lastModificationDate": 1688569156617,
       "contentHash": "7b131ca1ca32ef6378b7b9ad5488b901",
       "sourceName": "lib/forge-std/src/interfaces/IMulticall3.sol",
       "solcConfig": {
@@ -1411,10 +1411,10 @@
         }
       }
     },
-    "lib/murky/lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol": {
-      "lastModificationDate": 1687525085979,
-      "contentHash": "dfa2ddd358a44b4a8c28096c181d3169",
-      "sourceName": "lib/murky/lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+    "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol": {
+      "lastModificationDate": 1688569156744,
+      "contentHash": "df36f7051335cd1e748b1b6463b7fdd3",
+      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
@@ -1451,10 +1451,50 @@
         }
       }
     },
-    "lib/murky/lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol": {
-      "lastModificationDate": 1687525086026,
-      "contentHash": "76814c83c32552ed2b521c816b4d801a",
-      "sourceName": "lib/murky/lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
+    "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Permit.sol": {
+      "lastModificationDate": 1688569156746,
+      "contentHash": "aa849939a4ae83a4dcb2dca9b3e9e707",
+      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Permit.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "IERC20Permit": {
+          "0.8.19+commit.7dd6d404.Darwin.appleclang": "IERC20Permit.sol/IERC20Permit.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol": {
+      "lastModificationDate": 1688569156746,
+      "contentHash": "a159c68235d1d18f16dd0a57a000daea",
+      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
@@ -1484,8 +1524,9 @@
         }
       },
       "imports": [
-        "lib/murky/lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
-        "lib/murky/lib/openzeppelin-contracts/contracts/utils/Address.sol"
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Permit.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol"
       ],
       "versionRequirement": "^0.8.0",
       "artifacts": {
@@ -1494,10 +1535,10 @@
         }
       }
     },
-    "lib/murky/lib/openzeppelin-contracts/contracts/utils/Address.sol": {
-      "lastModificationDate": 1687525086047,
-      "contentHash": "ad714a6368ee7d43cded6bbe8af0b155",
-      "sourceName": "lib/murky/lib/openzeppelin-contracts/contracts/utils/Address.sol",
+    "lib/openzeppelin-contracts/contracts/utils/Address.sol": {
+      "lastModificationDate": 1688569156750,
+      "contentHash": "211ffd288c1588ba8c10eae668ca3c66",
+      "sourceName": "lib/openzeppelin-contracts/contracts/utils/Address.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
@@ -1535,8 +1576,8 @@
       }
     },
     "src/GrasslandWar.sol": {
-      "lastModificationDate": 1688547331841,
-      "contentHash": "ab8aa4e4717f9e2920e84ba6616a3b81",
+      "lastModificationDate": 1688638274708,
+      "contentHash": "e12842ec4c0f311c9d8941434b72020e",
       "sourceName": "src/GrasslandWar.sol",
       "solcConfig": {
         "settings": {
@@ -1581,9 +1622,27 @@
         "lib/compound-protocol/contracts/InterestRateModel.sol",
         "lib/compound-protocol/contracts/PriceOracle.sol",
         "lib/compound-protocol/contracts/Unitroller.sol",
-        "lib/murky/lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
-        "lib/murky/lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
-        "lib/murky/lib/openzeppelin-contracts/contracts/utils/Address.sol"
+        "lib/forge-std/lib/ds-test/src/test.sol",
+        "lib/forge-std/src/Base.sol",
+        "lib/forge-std/src/StdAssertions.sol",
+        "lib/forge-std/src/StdChains.sol",
+        "lib/forge-std/src/StdCheats.sol",
+        "lib/forge-std/src/StdError.sol",
+        "lib/forge-std/src/StdInvariant.sol",
+        "lib/forge-std/src/StdJson.sol",
+        "lib/forge-std/src/StdMath.sol",
+        "lib/forge-std/src/StdStorage.sol",
+        "lib/forge-std/src/StdStyle.sol",
+        "lib/forge-std/src/StdUtils.sol",
+        "lib/forge-std/src/Test.sol",
+        "lib/forge-std/src/Vm.sol",
+        "lib/forge-std/src/console.sol",
+        "lib/forge-std/src/console2.sol",
+        "lib/forge-std/src/interfaces/IMulticall3.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Permit.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol"
       ],
       "versionRequirement": "^0.8.17",
       "artifacts": {
@@ -1593,8 +1652,8 @@
       }
     },
     "test/GrasslandWar.t.sol": {
-      "lastModificationDate": 1688547397643,
-      "contentHash": "46b0bbfbeda044d65bffb1fa9397d55d",
+      "lastModificationDate": 1688638354417,
+      "contentHash": "02d8a72be9383b0ef7fda74c171aeb67",
       "sourceName": "test/GrasslandWar.t.sol",
       "solcConfig": {
         "settings": {
@@ -1656,9 +1715,10 @@
         "lib/forge-std/src/console.sol",
         "lib/forge-std/src/console2.sol",
         "lib/forge-std/src/interfaces/IMulticall3.sol",
-        "lib/murky/lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
-        "lib/murky/lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
-        "lib/murky/lib/openzeppelin-contracts/contracts/utils/Address.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Permit.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol",
         "src/GrasslandWar.sol"
       ],
       "versionRequirement": "^0.8.17",

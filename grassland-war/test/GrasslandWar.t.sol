@@ -15,7 +15,7 @@ contract GrassLandWarTest is Test {
 
     function setUp() public {
         // fork maninnet
-        uint256 blocknum = 12299047; // the block Alpha Homora V2 Exploiter created evil spell
+        uint256 blocknum = 12299047; //
         string memory rpc = vm.envString("MAINNET_RPC_URL");
         vm.createSelectFork(rpc, blocknum);
         assertEq(block.number, blocknum);
@@ -27,7 +27,7 @@ contract GrassLandWarTest is Test {
         player4 = makeAddr("Player4");
         player5 = makeAddr("Player5");
 
-        vm.deal(address(gameContract), initAmount); // the game contract init balance
+        // vm.deal(address(gameContract), initAmount); // the game contract init balance
         vm.deal(player1, initAmount); // player1 init balance
         vm.deal(player2, initAmount); // player2 init balance
         vm.deal(player3, initAmount); // player3 init balance
@@ -36,7 +36,7 @@ contract GrassLandWarTest is Test {
     }
 
     function testInitBalance() public {
-        assertEq(address(gameContract).balance, initAmount);
+        // assertEq(address(gameContract).balance, initAmount);
         assertEq(player1.balance, initAmount);
         assertEq(player2.balance, initAmount);
         assertEq(player3.balance, initAmount);
@@ -161,6 +161,331 @@ contract GrassLandWarTest is Test {
 
         // console.log("player4 balance = %s", player4.balance);
 
+        vm.stopPrank();
+    }
+
+    function testPickWinner_Case_1_Sheep() public {
+        uint depositAmountSheep = 3 ether;
+        uint depositAmountWolf = 1 ether;
+
+        vm.startPrank(player1);
+        gameContract.joinSheepPool{value: depositAmountSheep}();
+        vm.stopPrank();
+
+        vm.startPrank(player2);
+        gameContract.joinSheepPool{value: depositAmountSheep}();
+        vm.stopPrank();
+
+        vm.startPrank(player3);
+        gameContract.joinSheepPool{value: depositAmountSheep}();
+        vm.stopPrank();
+
+        vm.startPrank(player4);
+        gameContract.joinWolfPool{value: depositAmountWolf}();
+        vm.stopPrank();
+
+        vm.startPrank(player5);
+        gameContract.joinWolfPool{value: depositAmountWolf}();
+        vm.stopPrank();
+
+        // check sheepPoolBalance = 9 eth;
+        require(
+            gameContract.getSheepPoolBalance() == 9 ether,
+            "insufficient sheep pool amount"
+        );
+        // check wolfPoolBalance = 6 eth;
+        require(
+            gameContract.getWolfPoolBalance() == 6 ether,
+            "insufficient wolf pool amount"
+        );
+
+        // roll to end time
+        vm.warp(block.timestamp + 7 days + 1);
+        vm.roll(13500000);
+
+        // console.log("blockTime is : %s", block.timestamp);
+        // console.log("endTime is : %s", gameContract.getEndTime());
+
+        // pick winner
+        uint winner = gameContract.pickWinner();
+        // console.log("winner is : %s", winner);
+
+        vm.startPrank(player1);
+        assertGt(gameContract.getReward(), 0);
+        vm.stopPrank();
+
+        vm.startPrank(player2);
+        assertGt(gameContract.getReward(), 0);
+        vm.stopPrank();
+
+        vm.startPrank(player3);
+        assertGt(gameContract.getReward(), 0);
+        vm.stopPrank();
+
+        vm.startPrank(player4);
+        assertEq(gameContract.getReward(), 0);
+        vm.stopPrank();
+
+        vm.startPrank(player5);
+        assertEq(gameContract.getReward(), 0);
+        vm.stopPrank();
+    }
+
+    function testPickWinner_Case_2_Wolf() public {
+        uint depositAmountSheep = 1 ether;
+        uint depositAmountWolf = 1 ether;
+
+        vm.startPrank(player1);
+        gameContract.joinSheepPool{value: depositAmountSheep}();
+        vm.stopPrank();
+
+        vm.startPrank(player2);
+        gameContract.joinSheepPool{value: depositAmountSheep}();
+        vm.stopPrank();
+
+        vm.startPrank(player3);
+        gameContract.joinSheepPool{value: depositAmountSheep}();
+        vm.stopPrank();
+
+        vm.startPrank(player4);
+        gameContract.joinWolfPool{value: depositAmountWolf}();
+        vm.stopPrank();
+
+        vm.startPrank(player5);
+        gameContract.joinWolfPool{value: depositAmountWolf}();
+        vm.stopPrank();
+
+        // check sheepPoolBalance = 3 eth;
+        require(
+            gameContract.getSheepPoolBalance() == 3 ether,
+            "insufficient sheep pool amount"
+        );
+        // check wolfPoolBalance = 6 eth;
+        require(
+            gameContract.getWolfPoolBalance() == 6 ether,
+            "insufficient wolf pool amount"
+        );
+
+        // roll to end time
+        vm.warp(block.timestamp + 7 days + 1);
+        vm.roll(13500000);
+
+        // pick winner
+        uint winner = gameContract.pickWinner();
+        // console.log("winner is : %s", winner);
+
+        vm.startPrank(player1);
+        assertEq(gameContract.getReward(), 0);
+        vm.stopPrank();
+
+        vm.startPrank(player2);
+        assertEq(gameContract.getReward(), 0);
+        vm.stopPrank();
+
+        vm.startPrank(player3);
+        assertEq(gameContract.getReward(), 0);
+        vm.stopPrank();
+
+        vm.startPrank(player4);
+        assertGt(gameContract.getReward(), 0);
+        vm.stopPrank();
+
+        vm.startPrank(player5);
+        assertEq(gameContract.getReward(), 0);
+        vm.stopPrank();
+    }
+
+    function testPickWinner_Case_3_Balance_Equal() public {
+        uint depositAmountSheep = 2 ether;
+        uint depositAmountWolf = 1 ether;
+
+        vm.startPrank(player1);
+        gameContract.joinSheepPool{value: depositAmountSheep}();
+        vm.stopPrank();
+
+        vm.startPrank(player2);
+        gameContract.joinSheepPool{value: depositAmountSheep}();
+        vm.stopPrank();
+
+        vm.startPrank(player3);
+        gameContract.joinSheepPool{value: depositAmountSheep}();
+        vm.stopPrank();
+
+        vm.startPrank(player4);
+        gameContract.joinWolfPool{value: depositAmountWolf}();
+        vm.stopPrank();
+
+        vm.startPrank(player5);
+        gameContract.joinWolfPool{value: depositAmountWolf}();
+        vm.stopPrank();
+
+        // check sheepPoolBalance = 6 eth;
+        require(
+            gameContract.getSheepPoolBalance() == 6 ether,
+            "insufficient sheep pool amount"
+        );
+        // check wolfPoolBalance = 6 eth;
+        require(
+            gameContract.getWolfPoolBalance() == 6 ether,
+            "insufficient wolf pool amount"
+        );
+
+        // roll to end time
+        vm.warp(block.timestamp + 7 days + 1);
+        vm.roll(13500000);
+
+        // pick winner
+        uint winner = gameContract.pickWinner();
+        // console.log("winner is : %s", winner);
+        assertEq(winner, 1);
+    }
+
+    function testPickWinner_Case_4_No_Wolf() public {
+        uint depositAmountSheep = 1 ether;
+
+        vm.startPrank(player1);
+        gameContract.joinSheepPool{value: depositAmountSheep}();
+        vm.stopPrank();
+
+        vm.startPrank(player2);
+        gameContract.joinSheepPool{value: depositAmountSheep}();
+        vm.stopPrank();
+
+        // check sheepPoolBalance = 2 eth;
+        require(
+            gameContract.getSheepPoolBalance() == 2 ether,
+            "insufficient sheep pool amount"
+        );
+        // check wolfPoolBalance = 0 eth;
+        require(
+            gameContract.getWolfPoolBalance() == 0 ether,
+            "insufficient wolf pool amount"
+        );
+
+        // roll to end time
+        vm.warp(block.timestamp + 7 days + 1);
+        vm.roll(13500000);
+
+        // pick winner
+        uint winner = gameContract.pickWinner();
+        // console.log("winner is : %s", winner);
+        assertEq(winner, 3);
+    }
+
+    function testPickWinner_Case_5_One_Wolf() public {
+        uint depositAmountSheep = 2 ether;
+        uint depositAmountWolf = 1 ether;
+
+        vm.startPrank(player1);
+        gameContract.joinSheepPool{value: depositAmountSheep}();
+        vm.stopPrank();
+
+        vm.startPrank(player2);
+        gameContract.joinSheepPool{value: depositAmountSheep}();
+        vm.stopPrank();
+
+        vm.startPrank(player3);
+        gameContract.joinSheepPool{value: depositAmountSheep}();
+        vm.stopPrank();
+
+        vm.startPrank(player4);
+        gameContract.joinWolfPool{value: depositAmountWolf}();
+        vm.stopPrank();
+
+        // check sheepPoolBalance = 6 eth;
+        require(
+            gameContract.getSheepPoolBalance() == 6 ether,
+            "insufficient sheep pool amount"
+        );
+        // check wolfPoolBalance = 3 eth;
+        require(
+            gameContract.getWolfPoolBalance() == 3 ether,
+            "insufficient wolf pool amount"
+        );
+
+        // roll to end time
+        vm.warp(block.timestamp + 7 days + 1);
+        vm.roll(13500000);
+
+        // pick winner
+        uint winner = gameContract.pickWinner();
+        // console.log("winner is : %s", winner);
+        assertEq(winner, 2);
+    }
+
+    function testLeaveBeforePickWinner_Case_1_Sheep() public {
+        uint depositAmountSheep = 3 ether;
+        uint depositAmountWolf = 1 ether;
+
+        vm.startPrank(player1);
+        gameContract.joinSheepPool{value: depositAmountSheep}();
+        vm.stopPrank();
+
+        vm.startPrank(player2);
+        gameContract.joinSheepPool{value: depositAmountSheep}();
+        vm.stopPrank();
+
+        vm.startPrank(player3);
+        gameContract.joinSheepPool{value: depositAmountSheep}();
+        vm.stopPrank();
+
+        vm.startPrank(player4);
+        gameContract.joinWolfPool{value: depositAmountWolf}();
+        vm.stopPrank();
+
+        vm.startPrank(player5);
+        gameContract.joinWolfPool{value: depositAmountWolf}();
+        vm.stopPrank();
+
+        // check sheepPoolBalance = 9 eth;
+        require(
+            gameContract.getSheepPoolBalance() == 9 ether,
+            "insufficient sheep pool amount"
+        );
+        // check wolfPoolBalance = 6 eth;
+        require(
+            gameContract.getWolfPoolBalance() == 6 ether,
+            "insufficient wolf pool amount"
+        );
+
+        // roll to game duration-time
+        // vm.warp(block.timestamp + 3 days);
+        vm.roll(13000000);
+
+        vm.startPrank(player1);
+        uint withdrawAmount = gameContract.getSheepBalance();
+        gameContract.leaveSheepPool(withdrawAmount);
+        vm.stopPrank();
+
+        // roll to end time
+        vm.warp(block.timestamp + 7 days + 1);
+        vm.roll(13500000);
+
+        // console.log("blockTime is : %s", block.timestamp);
+        // console.log("endTime is : %s", gameContract.getEndTime());
+
+        // pick winner
+        uint winner = gameContract.pickWinner();
+        // console.log("winner is : %s", winner);
+
+        vm.startPrank(player1);
+        assertEq(gameContract.getReward(), 0);
+        vm.stopPrank();
+
+        vm.startPrank(player2);
+        assertGt(gameContract.getReward(), 0);
+        vm.stopPrank();
+
+        vm.startPrank(player3);
+        assertGt(gameContract.getReward(), 0);
+        vm.stopPrank();
+
+        vm.startPrank(player4);
+        assertEq(gameContract.getReward(), 0);
+        vm.stopPrank();
+
+        vm.startPrank(player5);
+        assertEq(gameContract.getReward(), 0);
         vm.stopPrank();
     }
 }

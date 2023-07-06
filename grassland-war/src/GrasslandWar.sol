@@ -1,5 +1,6 @@
 pragma solidity ^0.8.17;
 
+import "forge-std/Test.sol";
 import "openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
 import "openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol";
 import "compound-protocol/contracts/CEther.sol";
@@ -7,6 +8,7 @@ import "compound-protocol/contracts/Comptroller.sol";
 
 // sheep, wolves 會越來越肥
 // if game not ended and player withdraw, they could get the interest in compound
+// transfer to owner problem
 
 contract GrassLandWar {
     address public owner;
@@ -110,11 +112,11 @@ contract GrassLandWar {
         require(_amount > 0, "Amount must be greater than 0");
         require(_amount <= sheepBalance[msg.sender], "Insufficient balance");
 
+        uint sheepPoolBalanceBefore = sheepPoolBalance;
         uint _cTokenAmount = (getCTokenBalance() * _amount) /
-            sheepBalance[msg.sender];
+            sheepPoolBalanceBefore;
 
         sheepBalance[msg.sender] -= _amount;
-        uint sheepPoolBalanceBefore = sheepPoolBalance;
         sheepPoolBalance -= _amount;
 
         if (
@@ -135,11 +137,11 @@ contract GrassLandWar {
         require(_amount > 0, "Amount must be greater than 0");
         require(_amount <= wolfBalance[msg.sender], "Insufficient balance");
 
+        uint wolfPoolBalanceBefore = wolfPoolBalance;
         uint _cTokenAmount = (getCTokenBalance() * _amount) /
-            wolfBalance[msg.sender];
+            wolfPoolBalanceBefore;
 
         wolfBalance[msg.sender] -= _amount;
-        uint wolfPoolBalanceBefore = wolfPoolBalance;
         wolfPoolBalance -= _amount;
 
         if (
@@ -159,10 +161,13 @@ contract GrassLandWar {
     function _redeemFromCompound(uint _cTokenAmount) internal returns (uint) {
         require(_cTokenAmount > 0, "Invalid amount");
 
+        // 懲罰性扣除20%資金
+        uint newAmount = (_cTokenAmount * 80) / 100;
+
         // beforeRedeem
         uint beforeRedeem = address(this).balance;
         // Redeem cEther from Compound
-        uint errorLog = cEther.redeem(_cTokenAmount);
+        uint errorLog = cEther.redeem(newAmount);
         require(errorLog == 0, "Failed to redeem cEther");
 
         // Transfer redeemed Ether to the caller
@@ -176,7 +181,8 @@ contract GrassLandWar {
         require(winner != 0, "There is no winner yet.");
 
         uint interestEarned = _claimInterest();
-        payable(owner).transfer((interestEarned * 2) / 100);
+
+        // payable(owner).transfer((interestEarned * 2) / 100);
 
         // check status
         if (wolves.length == 0) {
@@ -192,7 +198,7 @@ contract GrassLandWar {
             // call wolf win prize
             _updateWolfReward((interestEarned * 98) / 100);
         } else {
-            payable(owner).transfer((interestEarned * 98) / 100);
+            // payable(owner).transfer((interestEarned * 98) / 100);
         }
 
         // transfer prize
@@ -202,14 +208,27 @@ contract GrassLandWar {
     }
 
     function _claimInterest() internal returns (uint) {
-        uint balanceBefore = getCTokenBalance();
-        require(balanceBefore > 0, "No interest available");
+        uint cETHBalance = getCTokenBalance();
+        require(cETHBalance > 0, "No interest available");
 
-        uint allETH = cEther.redeem(balanceBefore);
-        uint interestEarned = allETH - (sheepPoolBalance + wolfPoolBalance / 3);
+        uint ethBeforeRedeem = address(this).balance;
+        uint errorLog = cEther.redeem(cETHBalance);
+        require(errorLog == 0, "Failed to redeem cEther");
+        uint ethAfterRedeem = address(this).balance;
+
+        // console.log("ethBeforeRedeem is %s", ethBeforeRedeem);
+        // console.log("ethAfterRedeem is %s", ethAfterRedeem);
+        // console.log("sheepPoolBalance is %s", sheepPoolBalance);
+        // console.log("wolfPoolBalance is %s", wolfPoolBalance);
+
+        uint interestEarned = ethAfterRedeem -
+            ethBeforeRedeem -
+            (sheepPoolBalance + wolfPoolBalance / 3);
+
+        // console.log("interestEarned is %s", interestEarned);
 
         // mint it back
-        _supplyToCompound(allETH - interestEarned);
+        _supplyToCompound(ethAfterRedeem - ethBeforeRedeem - interestEarned);
 
         emit InterestEarned(address(this), interestEarned);
         return interestEarned;
@@ -221,9 +240,8 @@ contract GrassLandWar {
 
         // may cause risk
         for (uint256 i = 0; i < sheepWinner.length; i++) {
-            reward[sheepWinner[i]] +=
-                (sheepBalance[sheepWinner[i]] / sheepTotalBalance) *
-                _farmingReward;
+            reward[sheepWinner[i]] += ((sheepBalance[sheepWinner[i]] *
+                _farmingReward) / sheepTotalBalance);
         }
     }
 
@@ -255,6 +273,10 @@ contract GrassLandWar {
         // Transfer the amount to the recipient"s address
         payable(msg.sender).transfer(_amount);
         emit WithdrawalReward(msg.sender, _amount);
+    }
+
+    function getEndTime() public view returns (uint) {
+        return endTime;
     }
 
     function getWinner() public view returns (uint) {
