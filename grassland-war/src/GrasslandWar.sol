@@ -6,10 +6,6 @@ import "openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol";
 import "compound-protocol/contracts/CEther.sol";
 import "compound-protocol/contracts/Comptroller.sol";
 
-// sheep, wolves 會越來越肥
-// if game not ended and player withdraw, they could get the interest in compound
-// transfer to owner problem
-
 contract GrassLandWar {
     address public owner;
 

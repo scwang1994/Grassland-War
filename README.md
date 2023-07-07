@@ -1,21 +1,16 @@
-# 狼與羊群
+# GrasslandWar
 
-在這個遊戲中，玩家可以存入 ETH 選擇加入 `Sheep Pool` 或 `Wolf Pool`，所有的 ETH 將與其他 Farming 協議互動賺取利息，當時間截止時，獲勝者可以獲得利息收益。遊戲的玩法如下：
+In this contract, players can deposit ETH and choose to join either the `Sheep Pool` or the `Wolf Pool`. When joining, ETH will be transferred to Compound to earn interest, and at the end of each game, the dominant species will receive interest earnings. The detailed gameplay is as follows:
 
-### 玩法
+### Gameplay
 
-* 玩家選擇加入 `Sheep Pool` 或 `Wolf Pool`，存入 ETH。
-* 存入的 ETH 將用於其他協議做 Farming。
-* 在兩個 Pool 中，金額較高的 Pool 將成為優勢池。如果是 `Wolf Pool`，則計算金額時享有 3 倍的權重優勢。
-* 遊戲進行期間為 7 天，如果 7 天內優勢池未更改，則優勢種群獲勝；如 7 天內優勢池更改，則時間將重新計算。
-* 如果優勢種群結果是 `Sheep Pool`，則所有 `Sheep` 將分享 `Farming` 利息。利息的分配將根據加入時間和順序進行權重分配，領頭羊獲得最多利息。而 `Wolf` 將沒收利息。
-* 如果優勢種群結果是 `Wolf Pool`，則存入金額最高者獨得所有利息。
-* 如果時間截止時，`Wolf Pool` 的地址數量為 0，則協議獲勝。
-* 如果時間截止時，`Wolf Pool` 的地址數量為 1，則 `Wolf` 將直接獲勝。
-* 協議將從優勢種群結果中獲得 2% 的收入。
-
-### 如何開始
-
-### 如何自建測試合約
-#### 環境設置
-
+* Players choose to join either the `Sheep Pool` or the `Wolf Pool` and deposit ETH.
+* The deposited ETH will be used in Compound to earn interest.
+* In both pools, the pool with the higher amount will become the dominant pool. The `Wolf Pool` has a 3x weight advantage in the calculation.
+* The game duration is 7 days. If the dominant pool doesn't change within 7 days, the dominant species wins. If the dominant pool changes within 7 * days, the countdown restarts.
+* If the result is in favor of the `Sheep Pool,` all `Sheep` participants will share the interest. The interest distribution will be weighted based on the amount invested, and `Wolves` will forfeit the interest.
+* If the result is in favor of the `Wolf Pool,` the participant with the highest deposit amount will receive all the interest.
+* If, at the end of the game, the number of addresses in the `Wolf Pool` is 0, the protocol wins.
+* If, at the end of the game, the number of addresses in the `Wolf Pool` is 1, the `Wolf` will directly win.
+* The protocol will receive 2% of the revenue from each game result.
+* The second game will start immediately after the first game ends, and so on...
