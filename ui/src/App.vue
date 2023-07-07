@@ -10,38 +10,27 @@
         <!-- href="https://github.com/vuetifyjs/vuetify/releases/latest" -->
         <span>HOW TO PLAY</span>
       </a>
-      <v-btn large outlined color="#00896c" dark> Connect wallet </v-btn>
+      <v-btn large outlined :color="connectedColor" dark @click="connect">
+        {{ connected === true ? "launched" : "launch app" }}
+      </v-btn>
     </v-app-bar>
 
     <v-container class="setting" fill-height fluid>
       <v-main>
-        <router-view />
+        <router-view :connected="connected" :userAccount="account" />
       </v-main>
-      <!-- <button v-if="!connected" @click="connect">Connect wallet</button> -->
-
-      <!-- "callContract" event handler is added -->
-      <!-- <button v-if="connected" @click="callWinner">Call winner</button> -->
-
-      <!-- <button v-if="connected" @click="joinSheepPool">Join sheep-pool</button> -->
-      <!-- <button v-if="connected" @click="joinWolfPool">Join WolfPool</button> -->
-      <!-- displays the result of the contract -->
-      <!-- {{ contractResult }} -->
     </v-container>
   </v-app>
 </template>
 
 <script>
-import Web3 from "web3";
-import abiData from "./lib/abi.json";
-
 export default {
   name: "App",
 
   data() {
     return {
       connected: false,
-      contractResult: "",
-      abiData: abiData,
+      account: null,
     };
   },
   methods: {
@@ -51,45 +40,21 @@ export default {
 
     connect() {
       let ethereum = window.ethereum;
+
       if (ethereum) {
-        ethereum.request({ method: "eth_requestAccounts" }).then(() => {
-          this.connected = true;
+        ethereum.request({ method: "eth_requestAccounts" }).then((accounts) => {
+          if (accounts.length > 0) {
+            this.connected = true;
+            // console.log(accounts);
+            this.account = accounts[0];
+          }
         });
       }
     },
-
-    async joinSheepPool() {
-      // method for calling the contract method
-      let web3 = new Web3(window.ethereum);
-      let contractAddress = "0x10De6eB1e244C5542fa1E14aB02393c3431b77DA";
-
-      let abi = JSON.parse(`abiData`);
-
-      let contract = new web3.eth.Contract(abi, contractAddress);
-
-      //   contract.methods
-      //     .owner()
-      //     .call()
-      //     .then((result) => (this.contractResult = result));
-
-      // Set the amount of Ether to send (in wei)
-      let accounts = await window.ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      let userAddress = accounts[0];
-      let amountToSend = web3.utils.toWei("0.001", "ether");
-      // Example of calling a contract method that modifies data and sends Ether
-      let txHash = await contract.methods.joinSheepPool().send({
-        from: userAddress,
-        value: amountToSend,
-      });
-
-      console.log(txHash);
-
-      // wait for the transaction to be mined
-      let result = await web3.eth.getTransactionReceipt(txHash);
-
-      console.log(result);
+  },
+  computed: {
+    connectedColor() {
+      return this.connected === true ? "#CB4042" : "#00896c";
     },
   },
 };
