@@ -1,5 +1,5 @@
 # GrasslandWar
-[Link to Chinese README](https://github.com/scwang1994/Grassland-War/blob/f0296d1ef29e66b07e7d5d848961a9a78fcbbfb3/grassland-war/README.md)
+[Link to Chinese README](https://github.com/scwang1994/Grassland-War/blob/main/grassland-war/README.md)
 
 [Demo Page](https://scwang1994.github.io/Grassland-War/#/)
 
