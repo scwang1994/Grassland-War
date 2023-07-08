@@ -238,11 +238,16 @@ export default {
     async getWinner() {
       // Call the get function
       let result = await this.contractInstance.methods.getWinner().call();
-      parseInt(result) === 1
-        ? (this.sheepClass = "win-group")
-        : parseInt(result) === 2
-        ? (this.wolfClass = "win-group")
-        : null;
+      if (parseInt(result) === 1) {
+        this.sheepClass = "win-group";
+        this.wolfClass = "default-group";
+      } else if (parseInt(result) === 2) {
+        this.wolfClass = "win-group";
+        this.sheepClass = "default-group";
+      } else {
+        this.sheepClass = "default-group";
+        this.wolfClass = "default-group";
+      }
     },
 
     async getEndTime() {
