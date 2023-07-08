@@ -48,9 +48,9 @@ Other query functions are as follows:
 ### Development
 The contract and testing of this game are conducted on the main network. If you wish to perform testing on the GOERLI test network, the following adjustments need to be made:
 
-1. ./src/GrasslandWar.sol
+1. ./grassland-war/src/GrasslandWar.sol
 * MAINNET
-```
+```solidity
     constructor() payable {
         comptroller = Comptroller(0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B);
         cEther = CEther(payable(0x4Ddc2D193948926D02f9B1fE9e1daa0718270ED5));
@@ -67,12 +67,12 @@ The contract and testing of this game are conducted on the main network. If you 
         owner = msg.sender;
     }
 ```
-2. ./test/GrasslandWar.t
+2. ./grassland-war/test/GrasslandWar.t
 
 * `blocknum`、`vm.roll`
  
 * MAINNET
-``` .sol
+``` solidity
     string memory rpc = vm.envString("MAINNET_RPC_URL");
 ```
     
