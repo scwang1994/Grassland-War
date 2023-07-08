@@ -1,4 +1,5 @@
 # 狼與羊群
+[Demo Page](https://scwang1994.github.io/Grassland-War/#/)
 
 在這個合約中，玩家可以存入 ETH 選擇加入 `Sheep Pool` 或 `Wolf Pool`，加入時，ETH 將轉移至 Compound 賺取利息，當每場遊戲時間截止時，優勢物種將可以獲得利息收益。遊戲詳細的玩法如下：
 
