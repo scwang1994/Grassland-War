@@ -1,5 +1,6 @@
 # GrasslandWar
-[Link to Chinese README](https://github.com/scwang1994/Grassland-War/blob/f0296d1ef29e66b07e7d5d848961a9a78fcbbfb3/grassland-war/README.md)
+[Link to Chinese README](https://github.com/scwang1994/Grassland-War/blob/main/grassland-war/README.md)
+
 [Demo Page](https://scwang1994.github.io/Grassland-War/#/)
 
 In this contract, players can deposit ETH and choose to join either the `Sheep Pool` or the `Wolf Pool`. When joining, ETH will be transferred to Compound to earn interest, and at the end of each game, the dominant species will receive interest earnings. The detailed gameplay is as follows:
