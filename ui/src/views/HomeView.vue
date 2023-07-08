@@ -48,7 +48,7 @@
                     check
                   </v-btn>
                   {{
-                    userWolfBalance !== 0
+                    userWolfBalance !== null
                       ? "Your Balance " + userWolfBalance + " Ether"
                       : null
                   }}
@@ -115,7 +115,7 @@
                     check
                   </v-btn>
                   {{
-                    userSheepBalance !== 0
+                    userSheepBalance !== null
                       ? "Your Balance " + userSheepBalance + " Ether"
                       : null
                   }}
