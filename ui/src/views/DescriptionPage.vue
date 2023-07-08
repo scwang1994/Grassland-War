@@ -1,15 +1,15 @@
 <template>
   <div id="centering">
-    <v-card class="card" width="75vw" dark>
+    <v-card :class="textClass" width="75vw" dark>
       <v-row align="center" justify="center" style="text-align: center">
         <v-col cols="12">
-          <span style="font-size: 80px; font-weight: bold">
+          <span :class="titleClass" style="font-weight: bold">
             GRASSLAND-WAR
           </span>
         </v-col>
 
         <v-col cols="2"></v-col>
-        <v-col cols="8" style="color: white; text-align: start">
+        <v-col cols="8" style="color: white; text-align: start" class="mb-5">
           <p>
             * Players choose to join either the
             <span class="noticeText">Sheep Pool</span>
@@ -77,6 +77,26 @@ export default {
     return {};
   },
   methods: {},
+  computed: {
+    titleClass() {
+      if (this.$vuetify.breakpoint.width < 600) {
+        return "smallTitle";
+      } else if (this.$vuetify.breakpoint.width < 960) {
+        return "mediumTitle";
+      } else {
+        return "largeTitle";
+      }
+    },
+    textClass() {
+      if (this.$vuetify.breakpoint.width < 600) {
+        return "smallText";
+      } else if (this.$vuetify.breakpoint.width < 960) {
+        return "mediumText";
+      } else {
+        return "largeText";
+      }
+    },
+  },
 };
 </script>
 
@@ -86,8 +106,27 @@ export default {
   justify-content: center;
 }
 
-.card {
-  color: #00896c;
+.smallTitle {
+  font-size: 24px;
+}
+
+.mediumTitle {
+  font-size: 48px;
+}
+
+.largeTitle {
+  font-size: 80px;
+}
+
+.smallText {
+  font-size: 12px;
+}
+
+.mediumText {
+  font-size: 16px;
+}
+
+.largeText {
   font-size: 20px;
 }
 

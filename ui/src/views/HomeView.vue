@@ -1,17 +1,22 @@
 <template>
   <div id="centering">
-    <v-card class="card" width="80vw" dark>
-      <v-row align="center" justify="center" style="text-align: center">
+    <v-card :class="textClass" width="70vw" dark>
+      <v-row
+        align="center"
+        justify="center"
+        style="text-align: center"
+        class="background-image"
+      >
         <v-col cols="12">
-          <div style="background: #00896c">
+          <div>
+            <!-- <div style="background: #00896c"> -->
             <flip-countdown
-              style="font-weight: bold; color: white"
+              :class="[boldClass, colorClass]"
               :deadline="deadline"
             ></flip-countdown>
           </div>
-
-          <span style="font-size: 48px; font-weight: bold">
-            GRASSLAND-WAR
+          <span :class="[titleClass, boldClass, colorClass]">
+            GRASSLAND WAR
           </span>
         </v-col>
 
@@ -21,7 +26,7 @@
             <v-col cols="12" md="5">
               <v-card elevation="0" :class="wolfClass">
                 <br />
-                <p style="font-size: 30px; font-weight: bold">Wolf Pool</p>
+                <p :class="[subTitleClass, boldClass]">Wolf Pool</p>
 
                 <v-img
                   max-height="300px"
@@ -30,66 +35,68 @@
                   class="ml-auto mr-auto mt-auto mb-auto"
                 ></v-img>
                 <br />
-                <p>total balance {{ wolfPoolBalance }} Ether</p>
-                <br />
+
+                <p>Total Balance {{ wolfPoolBalance }} Ether</p>
+
+                <div class="mb-10">
+                  <v-btn
+                    :disabled="!connected"
+                    outlined
+                    small
+                    @click="getWolfBalance"
+                  >
+                    check
+                  </v-btn>
+                  {{
+                    userWolfBalance !== 0
+                      ? "Your Balance " + userWolfBalance + " Ether"
+                      : null
+                  }}
+                </div>
 
                 <v-row>
-                  <v-col cols="0" md="2"></v-col>
-                  <v-col cols="12" md="8">
-                    <v-row>
-                      <v-text-field
-                        class="mr-3"
-                        :disabled="!connected"
-                        v-model="wolfInputAmount"
-                        outlined
-                        label="Ether"
-                        type="number"
-                      ></v-text-field>
+                  <v-col cols="0" md="2" sm="0"></v-col>
+                  <v-col cols="12" md="8" sm="12">
+                    <v-text-field
+                      class="mb-3"
+                      :disabled="!connected"
+                      v-model="wolfInputAmount"
+                      outlined
+                      label="Ether"
+                      type="number"
+                      hide-details
+                    ></v-text-field>
 
-                      <v-btn
-                        class="mr-2"
-                        color="#00896c"
-                        :disabled="!connected"
-                        x-large
-                        depressed
-                        @click="joinWolfPool"
-                        >Join
-                      </v-btn>
+                    <v-btn
+                      class="mb-3"
+                      block
+                      color="#00896c"
+                      :disabled="!connected"
+                      x-large
+                      depressed
+                      @click="joinWolfPool"
+                      >Join
+                    </v-btn>
 
-                      <v-btn
-                        color="error"
-                        :disabled="!connected"
-                        x-large
-                        outlined
-                        @click="leaveWolfPool"
-                        >Leave
-                      </v-btn>
-                    </v-row>
+                    <v-btn
+                      block
+                      color="error"
+                      :disabled="!connected"
+                      x-large
+                      outlined
+                      @click="leaveWolfPool"
+                      >Leave
+                    </v-btn>
                   </v-col>
-                  <v-col cols="2"></v-col>
+                  <v-col cols="0" md="2" sm="0"></v-col>
                 </v-row>
-                <v-btn
-                  class="mr-3 mb-5"
-                  :disabled="!connected"
-                  fab
-                  outlined
-                  x-large
-                  @click="getWolfBalance"
-                >
-                  check
-                </v-btn>
-                {{
-                  userWolfBalance !== 0
-                    ? "Balance: " + userWolfBalance + " ETH"
-                    : null
-                }}
               </v-card>
             </v-col>
 
             <v-col cols="12" md="5">
               <v-card elevation="0" :class="sheepClass">
                 <br />
-                <p style="font-size: 30px; font-weight: bold">Sheep Pool</p>
+                <p :class="[subTitleClass, boldClass]">Sheep Pool</p>
                 <v-img
                   max-height="300px"
                   max-width="400px"
@@ -97,81 +104,89 @@
                   class="ml-auto mr-auto"
                 ></v-img>
                 <br />
-                <p>total balance {{ sheepPoolBalance }} Ether</p>
-                <br />
+                <p>Total Balance {{ sheepPoolBalance }} Ether</p>
+                <div class="mb-10">
+                  <v-btn
+                    :disabled="!connected"
+                    small
+                    outlined
+                    @click="getSheepBalance"
+                  >
+                    check
+                  </v-btn>
+                  {{
+                    userSheepBalance !== 0
+                      ? "Your Balance " + userSheepBalance + " Ether"
+                      : null
+                  }}
+                </div>
 
                 <v-row>
-                  <v-col cols="0" md="2"></v-col>
-                  <v-col cols="12" md="8">
-                    <v-row>
-                      <v-text-field
-                        class="mr-3"
-                        :disabled="!connected"
-                        v-model="sheepInputAmount"
-                        outlined
-                        label="Ether"
-                        type="number"
-                      ></v-text-field>
+                  <v-col cols="0" md="2" sm="0"></v-col>
+                  <v-col cols="12" md="8" sm="12">
+                    <v-text-field
+                      class="mb-3"
+                      :disabled="!connected"
+                      v-model="sheepInputAmount"
+                      outlined
+                      label="Ether"
+                      type="number"
+                      hide-details
+                    ></v-text-field>
 
-                      <v-btn
-                        class="mr-2"
-                        color="#00896c"
-                        :disabled="!connected"
-                        x-large
-                        depressed
-                        @click="joinSheepPool"
-                        >Join
-                      </v-btn>
+                    <v-btn
+                      class="mb-3"
+                      block
+                      color="#00896c"
+                      :disabled="!connected"
+                      x-large
+                      depressed
+                      @click="joinSheepPool"
+                      >Join
+                    </v-btn>
 
-                      <v-btn
-                        color="error"
-                        :disabled="!connected"
-                        x-large
-                        outlined
-                        @click="leaveSheepPool"
-                        >Leave
-                      </v-btn>
-                    </v-row>
+                    <v-btn
+                      block
+                      color="error"
+                      :disabled="!connected"
+                      x-large
+                      outlined
+                      @click="leaveSheepPool"
+                      >Leave
+                    </v-btn>
                   </v-col>
                   <v-col cols="0" md="2"></v-col>
                 </v-row>
-                <v-btn
-                  class="mr-3 mb-5"
-                  :disabled="!connected"
-                  fab
-                  x-large
-                  outlined
-                  @click="getSheepBalance"
-                >
-                  check
-                </v-btn>
-                {{
-                  userSheepBalance !== 0
-                    ? "Balance: " + userSheepBalance + " ETH"
-                    : null
-                }}
               </v-card>
             </v-col>
             <v-col cols="0" md="1"></v-col>
           </v-row>
 
           <v-row>
-            <v-col cols="12" style="font-weight: bold">
-              Reward {{ userReward !== 0 ? userReward + " ETH" : null }}
+            <v-col cols="12" :class="[subTitleClass, boldClass, colorClass]">
+              Reward {{ userReward !== 0 ? userReward + " Ether" : null }}
             </v-col>
             <v-col cols="12">
               <v-row>
                 <v-layout justify-center>
                   <v-btn
-                    class="mr-3"
+                    class="mr-3 mb-5"
                     :disabled="!connected"
                     x-large
+                    depressed
+                    :color="colorClass"
                     @click="getReward"
                   >
                     check
                   </v-btn>
 
-                  <v-btn :disabled="!connected" x-large @click="claimReward">
+                  <v-btn
+                    depressed
+                    :disabled="!connected"
+                    x-large
+                    :color="colorClass"
+                    @click="claimReward"
+                  >
                     claim
                   </v-btn>
                 </v-layout>
@@ -180,8 +195,6 @@
           </v-row>
         </v-col>
       </v-row>
-
-      <br />
     </v-card>
   </div>
 </template>
@@ -215,6 +228,10 @@ export default {
       wolfInputAmount: 0,
 
       toETH: 1000000000000000000,
+
+      // style
+      colorClass: "colorClass",
+      boldClass: "boldClass",
     };
   },
   methods: {
@@ -383,6 +400,35 @@ export default {
       );
     },
   },
+  computed: {
+    titleClass() {
+      if (this.$vuetify.breakpoint.width < 600) {
+        return "smallTitle";
+      } else if (this.$vuetify.breakpoint.width < 960) {
+        return "mediumTitle";
+      } else {
+        return "largeTitle";
+      }
+    },
+    subTitleClass() {
+      if (this.$vuetify.breakpoint.width < 600) {
+        return "smallSubTitle";
+      } else if (this.$vuetify.breakpoint.width < 960) {
+        return "mediumSubTitle";
+      } else {
+        return "largeSubTitle";
+      }
+    },
+    textClass() {
+      if (this.$vuetify.breakpoint.width < 600) {
+        return "smallText";
+      } else if (this.$vuetify.breakpoint.width < 960) {
+        return "mediumText";
+      } else {
+        return "largeText";
+      }
+    },
+  },
   async created() {
     // Connect to the Ethereum network
     if (window.ethereum) {
@@ -417,9 +463,10 @@ export default {
   justify-content: center;
 }
 
-.card {
-  color: #00896c;
-  font-size: 20px;
+.background-image {
+  background-image: url("../assets/banner.png");
+  background-size: cover;
+  background-position: center;
 }
 
 .default-group {
@@ -452,6 +499,50 @@ export default {
   background: linear-gradient(to bottom right, #dda52d, #ffffff);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.smallTitle {
+  font-size: 24px;
+}
+
+.mediumTitle {
+  font-size: 48px;
+}
+
+.largeTitle {
+  font-size: 80px;
+}
+
+.smallSubTitle {
+  font-size: 18px;
+}
+
+.mediumSubTitle {
+  font-size: 28px;
+}
+
+.largeSubTitle {
+  font-size: 40px;
+}
+
+.smallText {
+  font-size: 12px;
+}
+
+.mediumText {
+  font-size: 16px;
+}
+
+.largeText {
+  font-size: 20px;
+}
+
+.colorClass {
+  color: #00896c;
+}
+
+.boldClass {
+  font-weight: bold;
 }
 </style>
 
