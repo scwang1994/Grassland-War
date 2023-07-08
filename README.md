@@ -1,9 +1,11 @@
 # GrasslandWar
+[Link to Chinese README](https://github.com/scwang1994/Grassland-War/blob/21d3acb03eddb018169845b2d8f9c5b2325e87a3/grassland-war/README.md)
 
 In this contract, players can deposit ETH and choose to join either the `Sheep Pool` or the `Wolf Pool`. When joining, ETH will be transferred to Compound to earn interest, and at the end of each game, the dominant species will receive interest earnings. The detailed gameplay is as follows:
 
-### Gameplay
+### Framework
 
+#### Gameplay
 * Players choose to join either the `Sheep Pool` or the `Wolf Pool` and deposit ETH.
 * The deposited ETH will be used in Compound to earn interest.
 * In both pools, the pool with the higher amount will become the dominant pool. The `Wolf Pool` has a 3x weight advantage in the calculation.
@@ -15,5 +17,30 @@ In this contract, players can deposit ETH and choose to join either the `Sheep P
 * The protocol will receive 2% of the revenue from each game result.
 * The second game will start immediately after the first game ends, and so on...
 
-### Flowchart
+#### FeatureList
+The operations performed by the user include joining the Sheep Pool, leaving the Sheep Pool, joining the Wolf Pool, leaving the Wolf Pool, and claiming rewards. The following are the corresponding functions for the mentioned features:
+
+| Feature | Function | 
+|----------|----------|
+| Join Sheep Pool    | joinSheepPool  | 
+| Leave Sheep Pool    | joinWolfPool  | 
+| Join Wolf Pool    | leaveSheepPool  | 
+| Leave Wolf Pool    | leaveWolfPool  | 
+| Claim Reward    | claim  | 
+
+Other query functions are as follows:
+| Feature | Function | 
+|----------|----------|
+| Get End Time of the Current Round    | getEndTime  | 
+| Get Current Winner    | getWinner  | 
+| Get Sheep Count    | getSheep  | 
+| Get Wolves Count    | getWolves  | 
+| Get Total Sheep Pool Balance    | getSheepPoolBalance  | 
+| Get Total Wolf Pool Balance    | getWolfPoolBalance  | 
+| Get User's Investment in Sheep Pool    | getSheepBalance  | 
+| Get User's Investment in Wolf Pool    | getWolfBalance  | 
+| Get User's Accumulated Rewards    | getReward  | 
+| Get Total cETH Balance of the Contract    | getCTokenBalance  | 
+
+#### Flowchart
 ![FlowChart](https://github.com/scwang1994/Grassland-War/blob/1034ec925199df6a364d622c861b7569b87de2ca/Grassland-War.png)
