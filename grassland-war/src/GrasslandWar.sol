@@ -37,6 +37,7 @@ contract GrassLandWar {
 
     function joinSheepPool() external payable {
         require(msg.value > 0, "You must deposit some ETH.");
+        require(block.timestamp < endTime, "Game is ended");
         // if not in sheep list, added sender
         if (sheepBalance[msg.sender] == 0) {
             sheep.push(msg.sender);
@@ -61,6 +62,7 @@ contract GrassLandWar {
 
     function joinWolfPool() external payable {
         require(msg.value > 0, "You must deposit some ETH.");
+        require(block.timestamp < endTime, "Game is ended");
         // if not in wolf list, added sender
         if (wolfBalance[msg.sender] == 0) {
             wolves.push(msg.sender);
