@@ -14,3 +14,6 @@ In this contract, players can deposit ETH and choose to join either the `Sheep P
 * If, at the end of the game, the number of addresses in the `Wolf Pool` is 1, the `Wolf` will directly win.
 * The protocol will receive 2% of the revenue from each game result.
 * The second game will start immediately after the first game ends, and so on...
+
+### Flowchart
+![FlowChart](https://github.com/scwang1994/Grassland-War/blob/1034ec925199df6a364d622c861b7569b87de2ca/Grassland-War.png)
