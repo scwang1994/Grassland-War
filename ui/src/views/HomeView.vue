@@ -164,7 +164,7 @@
 
           <v-row>
             <v-col cols="12" :class="[subTitleClass, boldClass, colorClass]">
-              Reward {{ userReward !== 0 ? userReward + " Ether" : null }}
+              Reward {{ userReward !== null ? userReward + " Ether" : null }}
             </v-col>
             <v-col cols="12">
               <v-row>
@@ -220,9 +220,9 @@ export default {
       sheepPoolBalance: 0,
       wolfPoolBalance: 0,
 
-      userSheepBalance: 0,
-      userWolfBalance: 0,
-      userReward: 0,
+      userSheepBalance: null,
+      userWolfBalance: null,
+      userReward: null,
 
       sheepInputAmount: 0,
       wolfInputAmount: 0,
