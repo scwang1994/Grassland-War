@@ -17,7 +17,7 @@ contract GrassLandWarTest is Test {
     function setUp() public {
         // fork maninnet
         uint256 blocknum = 12299047;
-        string memory rpc = vm.envString("RPC_URL");
+        string memory rpc = vm.envString("MAINNET_RPC_URL");
         vm.createSelectFork(rpc, blocknum);
         assertEq(block.number, blocknum);
 

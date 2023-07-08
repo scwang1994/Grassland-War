@@ -43,3 +43,38 @@
 #### 流程圖
 ![FlowChart](https://github.com/scwang1994/Grassland-War/blob/1034ec925199df6a364d622c861b7569b87de2ca/Grassland-War.png)
 
+### Development
+此份合約內容與測試在主網上進行，如欲在 GOERLI 測試網進行測試，須針對以下內容進行調整：
+
+1. ./src/GrasslandWar.sol
+* MAINNET
+```
+    constructor() payable {
+        comptroller = Comptroller(0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B);
+        cEther = CEther(payable(0x4Ddc2D193948926D02f9B1fE9e1daa0718270ED5));
+        owner = msg.sender;
+    }
+```
+    
+* GOERLI
+
+```solidity
+    constructor() payable {
+        comptroller = Comptroller(0x627EA49279FD0dE89186A58b8758aD02B6Be2867);
+        cEther = CEther(payable(0x20572e4c090f15667cF7378e16FaD2eA0e2f3EfF));
+        owner = msg.sender;
+    }
+```
+2. ./test/GrasslandWar.t
+
+* `blocknum`、`vm.roll`皆需調整
+ 
+* MAINNET
+``` .sol
+    string memory rpc = vm.envString("MAINNET_RPC_URL");
+```
+    
+* GOERLI
+```solidity
+    string memory rpc = vm.envString("GOERLI_RPC_URL");
+```

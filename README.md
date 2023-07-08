@@ -44,3 +44,39 @@ Other query functions are as follows:
 
 #### Flowchart
 ![FlowChart](https://github.com/scwang1994/Grassland-War/blob/1034ec925199df6a364d622c861b7569b87de2ca/Grassland-War.png)
+
+### Development
+The contract and testing of this game are conducted on the main network. If you wish to perform testing on the GOERLI test network, the following adjustments need to be made:
+
+1. ./src/GrasslandWar.sol
+* MAINNET
+```
+    constructor() payable {
+        comptroller = Comptroller(0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B);
+        cEther = CEther(payable(0x4Ddc2D193948926D02f9B1fE9e1daa0718270ED5));
+        owner = msg.sender;
+    }
+```
+    
+* GOERLI
+
+```solidity
+    constructor() payable {
+        comptroller = Comptroller(0x627EA49279FD0dE89186A58b8758aD02B6Be2867);
+        cEther = CEther(payable(0x20572e4c090f15667cF7378e16FaD2eA0e2f3EfF));
+        owner = msg.sender;
+    }
+```
+2. ./test/GrasslandWar.t
+
+* `blocknum`、`vm.roll`
+ 
+* MAINNET
+``` .sol
+    string memory rpc = vm.envString("MAINNET_RPC_URL");
+```
+    
+* GOERLI
+```solidity
+    string memory rpc = vm.envString("GOERLI_RPC_URL");
+```
