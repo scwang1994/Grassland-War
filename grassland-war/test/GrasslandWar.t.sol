@@ -210,7 +210,7 @@ contract GrassLandWarTest is Test {
 
         // pick winner
         uint winner = gameContract.pickWinner();
-        // console.log("winner is : %s", winner);
+        console.log("winner is : %s", winner);
 
         vm.startPrank(player1);
         assertGt(gameContract.getReward(), 0);
@@ -605,13 +605,11 @@ contract GrassLandWarTest is Test {
         // vm.warp(block.timestamp + 3 days);
         vm.roll(13000000);
 
-        // vm.startPrank(player4);
-        // uint withdrawAmount = gameContract.getWolfBalance();
-
+        vm.startPrank(player4);
+        uint withdrawAmount = gameContract.getWolfBalance();
         // console.log("withdrawAmount is %s", withdrawAmount);
-
-        // gameContract.leaveWolfPool(withdrawAmount);
-        // vm.stopPrank();
+        gameContract.leaveWolfPool(withdrawAmount);
+        vm.stopPrank();
 
         // roll to end time
         vm.warp(block.timestamp + 7 days + 1);
@@ -681,13 +679,11 @@ contract GrassLandWarTest is Test {
         // vm.warp(block.timestamp + 3 days);
         vm.roll(13000000);
 
-        // vm.startPrank(player4);
-        // uint withdrawAmount = gameContract.getWolfBalance();
-
+        vm.startPrank(player4);
+        uint withdrawAmount = gameContract.getWolfBalance();
         // console.log("withdrawAmount is %s", withdrawAmount);
-
-        // gameContract.leaveWolfPool(withdrawAmount);
-        // vm.stopPrank();
+        gameContract.leaveWolfPool(withdrawAmount);
+        vm.stopPrank();
 
         // roll to end time
         vm.warp(block.timestamp + 7 days + 1);
@@ -695,7 +691,7 @@ contract GrassLandWarTest is Test {
 
         // pick winner
         uint winner = gameContract.pickWinner();
-        // console.log("winner is : %s", winner);
+        console.log("winner is : %s", winner);
 
         vm.startPrank(player1);
         assertEq(gameContract.getReward(), 0);
@@ -710,11 +706,11 @@ contract GrassLandWarTest is Test {
         vm.stopPrank();
 
         vm.startPrank(player4);
-        assertGt(gameContract.getReward(), 0);
+        assertEq(gameContract.getReward(), 0);
         vm.stopPrank();
 
         vm.startPrank(player5);
-        assertEq(gameContract.getReward(), 0);
+        assertGt(gameContract.getReward(), 0);
         vm.stopPrank();
     }
 

@@ -37,7 +37,7 @@ contract GrassLandWar {
 
     function joinSheepPool() external payable {
         require(msg.value > 0, "You must deposit some ETH.");
-        require(block.timestamp < endTime, "Game is ended");
+        require(endTime == 0 || block.timestamp < endTime, "Game is ended");
         // if not in sheep list, added sender
         if (sheepBalance[msg.sender] == 0) {
             sheep.push(msg.sender);
@@ -56,13 +56,17 @@ contract GrassLandWar {
             _updateEndTime();
             winner = 1;
         }
+        // if (sheep.length == 1) {
+        //     _updateEndTime();
+        //     winner = 1;
+        // }
 
         _supplyToCompound(msg.value);
     }
 
     function joinWolfPool() external payable {
         require(msg.value > 0, "You must deposit some ETH.");
-        require(block.timestamp < endTime, "Game is ended");
+        require(endTime == 0 || block.timestamp < endTime, "Game is ended");
         // if not in wolf list, added sender
         if (wolfBalance[msg.sender] == 0) {
             wolves.push(msg.sender);
@@ -81,6 +85,10 @@ contract GrassLandWar {
             _updateEndTime();
             winner = 2;
         }
+        // if (wolves.length == 1) {
+        //     _updateEndTime();
+        //     winner = 2;
+        // }
 
         _supplyToCompound(msg.value);
     }
@@ -124,6 +132,10 @@ contract GrassLandWar {
             _updateEndTime();
             winner = 2;
         }
+        // if (sheep.length == 1) {
+        //     _updateEndTime();
+        //     winner = 1;
+        // }
 
         // Transfer the amount to the recipient"s address
         uint redeemedAmount = _redeemFromCompound(_cTokenAmount);
@@ -149,6 +161,10 @@ contract GrassLandWar {
             _updateEndTime();
             winner = 1;
         }
+        // if (wolves.length == 1) {
+        //     _updateEndTime();
+        //     winner = 2;
+        // }
 
         // Transfer the amount to the recipient"s address
         uint redeemedAmount = _redeemFromCompound(_cTokenAmount);
@@ -182,9 +198,11 @@ contract GrassLandWar {
         // console.log("interestEarned is %s", interestEarned);
 
         // check status
-        if (wolves.length == 0) {
+        if (sheep.length == 0 || wolves.length == 0) {
             winner = 3; // contract win
-        } else if (wolves.length == 1) {
+        } else if (sheep.length == 1 && wolves.length != 1) {
+            winner = 1; // sheep win
+        } else if (wolves.length == 1 && sheep.length != 1) {
             winner = 2; // wolf win
         }
 
