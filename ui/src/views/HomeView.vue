@@ -237,13 +237,37 @@ export default {
   methods: {
     async getWinner() {
       // Call the get function
-      let result = await this.contractInstance.methods.getWinner().call();
-      if (parseInt(result) === 1) {
+      let result = parseInt(
+        await this.contractInstance.methods.getWinner().call()
+      );
+      let sheep = await this.contractInstance.getSheepNum;
+      let wolves = await this.contractInstance.getWolvesNum;
+
+      if (sheep === 1 && wolves !== 1) {
+        result = 1;
+      }
+      if (sheep === 1 && wolves !== 1) {
+        result = 2;
+      }
+      if (sheep === 1 && wolves === 1) {
+        result = 3;
+      }
+
+      if (result === 1) {
         this.sheepClass = "win-group";
         this.wolfClass = "default-group";
-      } else if (parseInt(result) === 2) {
+      } else if (result === 2) {
         this.wolfClass = "win-group";
         this.sheepClass = "default-group";
+      } else if (result === 3) {
+        this.wolfClass =
+          this.sheepPoolBalance < this.wolfPoolBalance
+            ? "win-group"
+            : "default-group";
+        this.sheepClass =
+          this.sheepPoolBalance > this.wolfPoolBalance
+            ? "win-group"
+            : "default-group";
       } else {
         this.sheepClass = "default-group";
         this.wolfClass = "default-group";
@@ -257,6 +281,18 @@ export default {
         this.deadline = this.formatDateTime(new Date(parseInt(result) * 1000));
       }
       console.log(this.deadline);
+    },
+
+    async getSheepNum() {
+      // Call the get function
+      let result = await this.contractInstance.methods.getSheep().call();
+      return parseInt(result);
+    },
+
+    async getWolvesNum() {
+      // Call the get function
+      let result = await this.contractInstance.methods.getWolves().call();
+      return parseInt(result);
     },
 
     async getSheepPoolBalance() {
@@ -305,10 +341,10 @@ export default {
     },
 
     async refreshData(group) {
-      this.getWinner();
       this.getEndTime();
       this.getSheepPoolBalance();
       this.getWolfPoolBalance();
+      this.getWinner();
 
       group === 0 ? this.getSheepBalance() : this.getWolfBalance();
     },
@@ -454,10 +490,10 @@ export default {
     this.contractInstance = contract;
 
     // call get functions
-    this.getWinner();
     this.getEndTime();
     this.getSheepPoolBalance();
     this.getWolfPoolBalance();
+    this.getWinner();
   },
 };
 </script>
