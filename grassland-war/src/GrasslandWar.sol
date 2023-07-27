@@ -1,4 +1,4 @@
-pragma solidity ^0.8.17;
+pragma solidity 0.8.17;
 
 import "forge-std/Test.sol";
 import "openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
@@ -38,6 +38,8 @@ contract GrassLandWar {
     function joinSheepPool() external payable {
         require(msg.value > 0, "You must deposit some ETH.");
         require(endTime == 0 || block.timestamp < endTime, "Game is ended");
+        require(sheep.length < 10, "Too many sheep");
+
         // if not in sheep list, added sender
         if (sheepBalance[msg.sender] == 0) {
             sheep.push(msg.sender);
@@ -67,6 +69,8 @@ contract GrassLandWar {
     function joinWolfPool() external payable {
         require(msg.value > 0, "You must deposit some ETH.");
         require(endTime == 0 || block.timestamp < endTime, "Game is ended");
+        require(wolves.length < 10, "Too many wolves");
+
         // if not in wolf list, added sender
         if (wolfBalance[msg.sender] == 0) {
             wolves.push(msg.sender);
@@ -233,16 +237,9 @@ contract GrassLandWar {
         require(errorLog == 0, "Failed to redeem cEther");
         uint ethAfterRedeem = address(this).balance;
 
-        // console.log("ethBeforeRedeem is %s", ethBeforeRedeem);
-        // console.log("ethAfterRedeem is %s", ethAfterRedeem);
-        // console.log("sheepPoolBalance is %s", sheepPoolBalance);
-        // console.log("wolfPoolBalance is %s", wolfPoolBalance);
-
         uint interestEarned = ethAfterRedeem -
             ethBeforeRedeem -
             (sheepPoolBalance + wolfPoolBalance / 3);
-
-        // console.log("interestEarned is %s", interestEarned);
 
         // mint it back
         _supplyToCompound(ethAfterRedeem - ethBeforeRedeem - interestEarned);
@@ -255,7 +252,6 @@ contract GrassLandWar {
         address[] memory sheepWinner = sheep;
         uint sheepTotalBalance = sheepPoolBalance;
 
-        // may cause risk
         for (uint256 i = 0; i < sheepWinner.length; i++) {
             reward[sheepWinner[i]] += ((sheepBalance[sheepWinner[i]] *
                 _farmingReward) / sheepTotalBalance);
@@ -267,7 +263,6 @@ contract GrassLandWar {
         address wolfWinner;
         uint winnerBalance;
 
-        // may cause risk
         for (uint256 i = 0; i < wolvesWinner.length; i++) {
             if (wolfBalance[wolvesWinner[i]] > winnerBalance) {
                 wolfWinner = wolvesWinner[i];
